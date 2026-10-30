@@ -43,3 +43,10 @@
 > 创建skill:提交项目：使用git commit并push到gitee仓库，gitee私人令牌 89af8ffce0f1bdd1ad6469c3b054c7ef;仓库地址:`https://gitee.com/sfz0419/web-project_sfz.git`
 
 ---
+
+**时间**: 2026-10-30  
+**模型**: DeepSeek-V4.1-Flash  
+**提示词**:
+> 创建技能skill：提交到github，将本项目提交commit并push到`https://github.com/SFZ-060419/sfz318`，使用已设置公钥。
+
+---
