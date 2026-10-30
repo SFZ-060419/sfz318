@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N° 04 · Mobile Tab Bar · SVG</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --wy_bg:        #0b0e14;
+    --wy_bg_soft:   #12161f;
+    --wy_gold:      #d4af37;
+    --wy_gold_dim:  #8a7433;
+    --wy_text:      #e8e4d9;
+    --wy_text_muted:#7a7468;
+    --wy_line:      rgba(212, 175, 55, .12);
+    --wy_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --wy_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
+  }
+
+  html, body {
+    font-family: var(--wy_sans);
+    background: var(--wy_bg); color: var(--wy_text);
+    min-height: 100vh;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(900px 500px at 50% -10%, rgba(212,175,55,.05), transparent 60%),
+      radial-gradient(700px 400px at 50% 110%, rgba(180,140,60,.04), transparent 60%);
+  }
+  .wy_page { position: relative; z-index: 1; }
+
+  .wy_header {
+    padding: 28px 20px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--wy_line);
+    max-width: 480px; margin: 0 auto;
+  }
+  .wy_home_link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--wy_text_muted); text-decoration: none;
+    font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
+    transition: color .3s ease;
+  }
+  .wy_home_link:hover { color: var(--wy_gold); }
+  .wy_header_title {
+    font-family: var(--wy_serif); font-weight: 500;
+    font-size: 22px; letter-spacing: .04em;
+    background: linear-gradient(135deg, #f0d98b 0%, #d4af37 60%, #8a7433 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+  .wy_header_tag {
+    font-family: var(--wy_serif); font-size: 12px; letter-spacing: .25em;
+    color: var(--wy_gold_dim);
+  }
+  .wy_note {
+    text-align: center; padding: 24px 20px 0;
+    font-size: 11px; letter-spacing: .2em;
+    color: var(--wy_gold_dim); text-transform: uppercase;
+  }
+
+  .wy_stage { max-width: 480px; margin: 48px auto 120px; padding: 0 16px; }
+
+  /* 手机容器 */
+  .wy_phone {
+    position: relative;
+    background: #06080c;
+    border-radius: 44px;
+    padding: 20px;
+    box-shadow:
+      0 0 0 2px #1a1e28,
+      0 0 0 4px #0d1016,
+      0 40px 80px -20px rgba(0,0,0,.6),
+      0 20px 40px -20px rgba(212,175,55,.06);
+  }
+  .wy_phone_notch {
+    width: 120px; height: 26px; background: #000;
+    border-radius: 0 0 18px 18px;
+    margin: 0 auto 20px; position: relative;
+  }
+  .wy_phone_notch::before {
+    content: ''; position: absolute; top: 8px; right: 16px;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2a2e3a;
+  }
+
+  /* App 内容区 */
+  .wy_app_content {
+    background: linear-gradient(180deg, var(--wy_bg_soft) 0%, #0e1118 100%);
+    border-radius: 24px;
+    min-height: 520px;
+    padding: 32px 24px;
+    border: 1px solid var(--wy_line);
+    overflow: hidden;
+  }
+  .wy_app_header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 24px;
+  }
+  .wy_app_greeting {
+    font-family: var(--wy_serif); font-weight: 500; font-size: 26px;
+    color: var(--wy_text); line-height: 1.2;
+  }
+  .wy_app_greeting span {
+    display: block; font-family: var(--wy_sans); font-size: 11px;
+    color: var(--wy_gold); letter-spacing: .3em; text-transform: uppercase;
+    margin-bottom: 6px; font-weight: 500;
+  }
+  .wy_app_avatar {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, #d4af37, #8a7433);
+    border: 1px solid var(--wy_gold);
+  }
+  .wy_card_list { display: flex; flex-direction: column; gap: 14px; }
+  .wy_app_card {
+    background: var(--wy_bg);
+    border: 1px solid var(--wy_line);
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .wy_app_card_icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(212,175,55,.08);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--wy_gold);
+  }
+  .wy_app_card_icon svg { width: 22px; height: 22px; stroke-width: 1.6; }
+  .wy_app_card_text { flex: 1; }
+  .wy_app_card_title { font-size: 14px; color: var(--wy_text); font-weight: 500; margin-bottom: 2px; }
+  .wy_app_card_sub { font-size: 11px; color: var(--wy_text_muted); font-weight: 300; }
+  .wy_app_card_arrow { color: var(--wy_gold_dim); font-size: 14px; }
+
+  /* ======= 底部 Tab Bar ======= */
+  .wy_tabbar-wrap { margin-top: 24px; position: relative; }
+  .wy_tabbar {
+    display: flex;
+    align-items: stretch;
+    background: linear-gradient(180deg, rgba(20,24,32,.98) 0%, rgba(12,15,20,.98) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--wy_line);
+    border-radius: 0 0 24px 24px;
+    padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .wy_tab {
+    position: relative;
+    flex: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10px 0 8px;
+    cursor: pointer;
+    color: var(--wy_text_muted);
+    text-decoration: none;
+    transition: color .25s ease;
+    font-family: var(--wy_sans);
+    font-size: 10.5px;
+    letter-spacing: .08em;
+  }
+
+  .wy_tab_icon {
+    width: 24px; height: 24px;
+    margin-bottom: 6px;
+    transition: transform .25s ease, color .25s ease;
+    color: currentColor;
+  }
+  .wy_tab_icon svg { width: 100%; height: 100%; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+
+  .wy_tab.wy_tab_active { color: var(--wy_gold); }
+  .wy_tab.wy_tab_active .wy_tab_icon {
+    transform: translateY(-2px);
+    filter: drop-shadow(0 0 8px rgba(212,175,55,.4));
+  }
+  .wy_tab.wy_tab_active::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 20px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--wy_gold), transparent);
+    border-radius: 2px;
+  }
+
+  /* 徽章：数字 */
+  .wy_badge {
+    position: absolute;
+    top: 0; right: 50%;
+    transform: translateX(16px);
+    min-width: 16px; height: 16px;
+    padding: 0 4px;
+    background: #ff4757;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+    font-family: var(--wy_sans);
+    box-shadow: 0 2px 6px rgba(255,71,87,.4);
+    z-index: 2;
+    animation: wy_badgePop .3s ease-out;
+  }
+  .wy_badge.wy_badge_large {
+    min-width: 18px; height: 18px; line-height: 18px; font-size: 10px;
+    transform: translateX(18px);
+  }
+
+  /* 红点 */
+  .wy_dot {
+    position: absolute;
+    top: 0; right: 50%;
+    transform: translateX(15px);
+    width: 8px; height: 8px;
+    background: #ff4757;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px rgba(12,15,20,.9), 0 2px 6px rgba(255,71,87,.5);
+    z-index: 2;
+    animation: wy_dotPulse 1.8s ease-in-out infinite;
+  }
+
+  @keyframes wy_badgePop {
+    0%   { transform: translateX(16px) scale(0); }
+    60%  { transform: translateX(16px) scale(1.15); }
+    100% { transform: translateX(16px) scale(1); }
+  }
+  @keyframes wy_badgePopLg {
+    0%   { transform: translateX(18px) scale(0); }
+    60%  { transform: translateX(18px) scale(1.15); }
+    100% { transform: translateX(18px) scale(1); }
+  }
+  @keyframes wy_dotPulse {
+    0%, 100% { transform: translateX(15px) scale(1); opacity: 1; }
+    50%      { transform: translateX(15px) scale(1.3); opacity: .75; }
+  }
+
+  .wy_footer {
+    max-width: 480px; margin: 0 auto;
+    padding: 24px 20px 64px;
+    border-top: 1px solid var(--wy_line);
+    display: flex; justify-content: space-between;
+    font-size: 10px; letter-spacing: .22em;
+    color: var(--wy_text_muted); text-transform: uppercase;
+  }
+  .wy_footer a { color: inherit; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="wy_page">
+
+  <header class="wy_header">
+    <a class="wy_home_link" href="index.html">← Home</a>
+    <h1 class="wy_header_title">Tab Bar</h1>
+    <div class="wy_header_tag">N° 04 · SVG</div>
+  </header>
+
+  <p class="wy_note">Mobile Preview · 375pt</p>
+
+  <div class="wy_stage">
+    <div class="wy_phone">
+      <div class="wy_phone_notch"></div>
+
+      <!-- App 内容区 -->
+      <div class="wy_app_content">
+        <div class="wy_app_header">
+          <div class="wy_app_greeting">
+            <span>Good Evening</span>
+            欢迎回来，Sfz
+          </div>
+          <div class="wy_app_avatar"></div>
+        </div>
+
+        <div class="wy_card_list">
+          <div class="wy_app_card">
+            <div class="wy_app_card_icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <div class="wy_app_card_text">
+              <div class="wy_app_card_title">我的收藏</div>
+              <div class="wy_app_card_sub">12 件精选 · 今日更新 1</div>
+            </div>
+            <div class="wy_app_card_arrow">›</div>
+          </div>
+          <div class="wy_app_card">
+            <div class="wy_app_card_icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </div>
+            <div class="wy_app_card_text">
+              <div class="wy_app_card_title">购物车</div>
+              <div class="wy_app_card_sub">3 件商品 · ¥ 876.00</div>
+            </div>
+            <div class="wy_app_card_arrow">›</div>
+          </div>
+          <div class="wy_app_card">
+            <div class="wy_app_card_icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </div>
+            <div class="wy_app_card_text">
+              <div class="wy_app_card_title">分享给好友</div>
+              <div class="wy_app_card_sub">推荐即可获赠 20 积分</div>
+            </div>
+            <div class="wy_app_card_arrow">›</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 底部 Tab Bar ===== -->
+      <nav class="wy_tabbar-wrap">
+        <div class="wy_tabbar">
+
+          <!-- Tab 1 收藏 · 默认激活 + 红点 -->
+          <a class="wy_tab wy_tab_active" href="#" data-tab="home">
+            <span class="wy_tab_icon">
+              <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </span>
+            <span>收藏</span>
+            <span class="wy_dot" aria-label="未读"></span>
+          </a>
+
+          <!-- Tab 2 分享 -->
+          <a class="wy_tab" href="#" data-tab="share">
+            <span class="wy_tab_icon">
+              <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+            </span>
+            <span>分享</span>
+          </a>
+
+          <!-- Tab 3 购物车 · 数字徽章 3 -->
+          <a class="wy_tab" href="#" data-tab="cart">
+            <span class="wy_tab_icon">
+              <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </span>
+            <span>购物</span>
+            <span class="wy_badge">3</span>
+          </a>
+
+          <!-- Tab 4 消息 · 数字徽章 12 -->
+          <a class="wy_tab" href="#" data-tab="msg">
+            <span class="wy_tab_icon">
+              <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </span>
+            <span>消息</span>
+            <span class="wy_badge wy_badge_large">12</span>
+          </a>
+
+        </div>
+      </nav>
+
+    </div>
+  </div>
+
+  <footer class="wy_footer">
+    <span><a href="iconfont-3.html">← N° 03 · 字体图标版</a></span>
+    <span>Inline SVG · 24×24</span>
+  </footer>
+
+</div>
+
+<script>
+  // Tab 切换
+  const wy_tabs = document.querySelectorAll('.wy_tab');
+  wy_tabs.forEach(wy_tab => {
+    wy_tab.addEventListener('click', wy_e => {
+      wy_e.preventDefault();
+      wy_tabs.forEach(t => t.classList.remove('wy_tab_active'));
+      wy_tab.classList.add('wy_tab_active');
+    });
+  });
+</script>
+</body>
+</html>

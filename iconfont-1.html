@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N° 01 · Font Awesome — 字体图标工坊</title>
+<link rel="stylesheet" href="cdn/fontawesome/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --wy_bg:        #0b0e14;
+    --wy_bg_soft:   #12161f;
+    --wy_gold:      #d4af37;
+    --wy_gold_dim:  #8a7433;
+    --wy_text:      #e8e4d9;
+    --wy_text_muted:#8a8578;
+    --wy_line:      rgba(212, 175, 55, .15);
+    --wy_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --wy_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--wy_sans);
+    background: var(--wy_bg); color: var(--wy_text);
+    min-height: 100vh; position: relative; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1000px 600px at 5% 0%, rgba(212,175,55,.07), transparent 60%),
+      radial-gradient(800px 500px at 100% 100%, rgba(180,140,60,.05), transparent 60%);
+  }
+
+  .wy_container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 56px 32px 96px; }
+
+  /* Header */
+  .wy_header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 28px; border-bottom: 1px solid var(--wy_line); margin-bottom: 56px;
+  }
+  .wy_home_link {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--wy_text_muted); text-decoration: none;
+    font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
+    transition: color .3s ease, gap .3s ease;
+  }
+  .wy_home_link:hover { color: var(--wy_gold); gap: 16px; }
+  .wy_section_tag {
+    font-family: var(--wy_serif); font-size: 14px; letter-spacing: .3em;
+    color: var(--wy_gold_dim);
+  }
+
+  /* Hero */
+  .wy_hero { text-align: center; margin-bottom: 72px; }
+  .wy_hero_kicker { font-size: 11px; letter-spacing: .5em; color: var(--wy_gold); text-transform: uppercase; margin-bottom: 20px; }
+  .wy_hero_title {
+    font-family: var(--wy_serif); font-weight: 500;
+    font-size: clamp(44px, 6.5vw, 80px); line-height: 1.05;
+    background: linear-gradient(135deg, #f0d98b 0%, #d4af37 50%, #8a7433 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 20px;
+  }
+  .wy_hero_sub { font-size: 14px; color: var(--wy_text_muted); font-weight: 300; letter-spacing: .08em; }
+
+  /* 分类区 */
+  .wy_section { margin-bottom: 80px; }
+  .wy_section_head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .wy_section_title {
+    font-family: var(--wy_serif); font-weight: 500; font-size: 26px; color: var(--wy_text);
+    display: flex; align-items: center; gap: 18px;
+  }
+  .wy_section_title::before {
+    content: ''; width: 36px; height: 1px; background: var(--wy_gold);
+  }
+  .wy_section_meta { font-size: 11px; letter-spacing: .3em; color: var(--wy_text_muted); text-transform: uppercase; }
+
+  /* 图标网格 */
+  .wy_grid {
+    display: grid; gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .wy_icon_card {
+    background: linear-gradient(160deg, var(--wy_bg_soft) 0%, #0d1016 100%);
+    border: 1px solid var(--wy_line); border-radius: 4px;
+    padding: 28px 16px 20px; text-align: center;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: all .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .wy_icon_card::after {
+    content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--wy_gold), transparent);
+    transition: width .4s ease, left .4s ease;
+  }
+  .wy_icon_card:hover { border-color: var(--wy_gold); transform: translateY(-3px); }
+  .wy_icon_card:hover::after { width: 80%; left: 10%; }
+
+  .wy_icon_box {
+    font-size: 36px; color: var(--wy_gold);
+    margin-bottom: 16px; line-height: 1;
+    transition: transform .3s ease, color .3s ease;
+  }
+  .wy_icon_card:hover .wy_icon_box { transform: rotate(-6deg) scale(1.15); color: #f0d98b; }
+  .wy_icon_name {
+    font-size: 11px; letter-spacing: .18em; color: var(--wy_text_muted);
+    font-family: var(--wy_sans); font-weight: 400;
+    word-break: break-all;
+  }
+
+  /* 用法代码块 */
+  .wy_usage {
+    background: var(--wy_bg_soft); border: 1px solid var(--wy_line); border-radius: 4px;
+    padding: 24px 28px; font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 12.5px; color: var(--wy_text_muted); line-height: 1.8;
+    overflow-x: auto; margin-bottom: 40px;
+  }
+  .wy_usage code { color: #b8a870; }
+  .wy_usage .wy_tag { color: var(--wy_gold); }
+  .wy_usage .wy_str { color: #d4c390; }
+
+  /* 页脚 */
+  .wy_footer {
+    margin-top: 96px; padding-top: 32px;
+    border-top: 1px solid var(--wy_line);
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: .25em;
+    color: var(--wy_text_muted); text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="wy_container">
+
+  <header class="wy_header">
+    <a class="wy_home_link" href="index.html">← 返回首页</a>
+    <div class="wy_section_tag">N° 01 — Font Awesome 6.6</div>
+  </header>
+
+  <section class="wy_hero">
+    <p class="wy_hero_kicker">Typography of Glyphs · 字形的排版艺术</p>
+    <h1 class="wy_hero_title">A Font, A Thousand Stories</h1>
+    <p class="wy_hero_sub">每一个图标都是一个字形 —— 用 CSS 即能改变它的大小、颜色、粗细与阴影。</p>
+  </section>
+
+  <!-- Solid Icons -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Solid · 实心</h2>
+      <span class="wy_section_meta">fa-solid · 16 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-heart"></i></div><div class="wy_icon_name">heart</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-star"></i></div><div class="wy_icon_name">star</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-moon"></i></div><div class="wy_icon_name">moon</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-sun"></i></div><div class="wy_icon_name">sun</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-fire"></i></div><div class="wy_icon_name">fire</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-feather"></i></div><div class="wy_icon_name">feather</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-palette"></i></div><div class="wy_icon_name">palette</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-camera-retro"></i></div><div class="wy_icon_name">camera-retro</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-music"></i></div><div class="wy_icon_name">music</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-book-open"></i></div><div class="wy_icon_name">book-open</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-wine-glass"></i></div><div class="wy_icon_name">wine-glass</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-crown"></i></div><div class="wy_icon_name">crown</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-leaf"></i></div><div class="wy_icon_name">leaf</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-gem"></i></div><div class="wy_icon_name">gem</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-pen-nib"></i></div><div class="wy_icon_name">pen-nib</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-solid fa-landmark"></i></div><div class="wy_icon_name">landmark</div></div>
+    </div>
+  </section>
+
+  <!-- Regular Icons -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Regular · 描边</h2>
+      <span class="wy_section_meta">fa-regular · 12 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-heart"></i></div><div class="wy_icon_name">heart</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-star"></i></div><div class="wy_icon_name">star</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-moon"></i></div><div class="wy_icon_name">moon</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-sun"></i></div><div class="wy_icon_name">sun</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-bookmark"></i></div><div class="wy_icon_name">bookmark</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-envelope"></i></div><div class="wy_icon_name">envelope</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-comment"></i></div><div class="wy_icon_name">comment</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-copy"></i></div><div class="wy_icon_name">copy</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-image"></i></div><div class="wy_icon_name">image</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-lightbulb"></i></div><div class="wy_icon_name">lightbulb</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-face-smile"></i></div><div class="wy_icon_name">face-smile</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-regular fa-circle"></i></div><div class="wy_icon_name">circle</div></div>
+    </div>
+  </section>
+
+  <!-- Brands Icons -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Brands · 品牌</h2>
+      <span class="wy_section_meta">fa-brands · 12 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-github"></i></div><div class="wy_icon_name">github</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-instagram"></i></div><div class="wy_icon_name">instagram</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-twitter"></i></div><div class="wy_icon_name">twitter</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-dribbble"></i></div><div class="wy_icon_name">dribbble</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-behance"></i></div><div class="wy_icon_name">behance</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-pinterest"></i></div><div class="wy_icon_name">pinterest</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-youtube"></i></div><div class="wy_icon_name">youtube</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-linkedin"></i></div><div class="wy_icon_name">linkedin</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-medium"></i></div><div class="wy_icon_name">medium</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-apple"></i></div><div class="wy_icon_name">apple</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-google"></i></div><div class="wy_icon_name">google</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i class="fa-brands fa-figma"></i></div><div class="wy_icon_name">figma</div></div>
+    </div>
+  </section>
+
+  <!-- 用法 -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Usage · 用法</h2>
+      <span class="wy_section_meta">Copy & Paste</span>
+    </div>
+    <div class="wy_usage"><pre><span class="wy_tag">&lt;link</span> <span class="wy_str">rel</span>=<span class="wy_str">"stylesheet"</span> <span class="wy_str">href</span>=<span class="wy_str">"cdn/fontawesome/css/all.min.css"</span><span class="wy_tag">&gt;</span>
+
+<span class="wy_tag">&lt;i</span> <span class="wy_str">class</span>=<span class="wy_str">"fa-solid fa-heart"</span><span class="wy_tag">&gt;&lt;/i&gt;</span>
+<span class="wy_tag">&lt;i</span> <span class="wy_str">class</span>=<span class="wy_str">"fa-regular fa-star"</span><span class="wy_tag">&gt;&lt;/i&gt;</span>
+<span class="wy_tag">&lt;i</span> <span class="wy_str">class</span>=<span class="wy_str">"fa-brands fa-github"</span><span class="wy_tag">&gt;&lt;/i&gt;</span></pre></div>
+  </section>
+
+  <footer class="wy_footer">
+    <span><a class="wy_home_link" href="iconfont-2.html" style="color:inherit;">→ N° 02 · Lucide SVG</a></span>
+    <span>Font Awesome 6.6.0 · WebFonts</span>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>N° 02 · Lucide — SVG 图标工坊</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --wy_bg:        #0b0e14;
+    --wy_bg_soft:   #12161f;
+    --wy_gold:      #d4af37;
+    --wy_gold_dim:  #8a7433;
+    --wy_text:      #e8e4d9;
+    --wy_text_muted:#8a8578;
+    --wy_line:      rgba(212, 175, 55, .15);
+    --wy_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --wy_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--wy_sans);
+    background: var(--wy_bg); color: var(--wy_text);
+    min-height: 100vh; position: relative; overflow-x: hidden;
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(1000px 600px at 95% 0%, rgba(212,175,55,.06), transparent 60%),
+      radial-gradient(900px 500px at 0% 100%, rgba(130,170,200,.05), transparent 60%);
+  }
+
+  .wy_container { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 56px 32px 96px; }
+
+  .wy_header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 28px; border-bottom: 1px solid var(--wy_line); margin-bottom: 56px;
+  }
+  .wy_home_link {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--wy_text_muted); text-decoration: none;
+    font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
+    transition: color .3s ease, gap .3s ease;
+  }
+  .wy_home_link:hover { color: var(--wy_gold); gap: 16px; }
+  .wy_section_tag {
+    font-family: var(--wy_serif); font-size: 14px; letter-spacing: .3em;
+    color: var(--wy_gold_dim);
+  }
+
+  .wy_hero { text-align: center; margin-bottom: 72px; }
+  .wy_hero_kicker { font-size: 11px; letter-spacing: .5em; color: var(--wy_gold); text-transform: uppercase; margin-bottom: 20px; }
+  .wy_hero_title {
+    font-family: var(--wy_serif); font-weight: 500;
+    font-size: clamp(44px, 6.5vw, 80px); line-height: 1.05;
+    background: linear-gradient(135deg, #f0d98b 0%, #d4af37 50%, #8a7433 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 20px;
+  }
+  .wy_hero_sub { font-size: 14px; color: var(--wy_text_muted); font-weight: 300; letter-spacing: .08em; }
+
+  .wy_section { margin-bottom: 80px; }
+  .wy_section_head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 32px;
+  }
+  .wy_section_title {
+    font-family: var(--wy_serif); font-weight: 500; font-size: 26px; color: var(--wy_text);
+    display: flex; align-items: center; gap: 18px;
+  }
+  .wy_section_title::before {
+    content: ''; width: 36px; height: 1px; background: var(--wy_gold);
+  }
+  .wy_section_meta { font-size: 11px; letter-spacing: .3em; color: var(--wy_text_muted); text-transform: uppercase; }
+
+  .wy_grid {
+    display: grid; gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .wy_icon_card {
+    background: linear-gradient(160deg, var(--wy_bg_soft) 0%, #0d1016 100%);
+    border: 1px solid var(--wy_line); border-radius: 4px;
+    padding: 28px 16px 20px; text-align: center;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: all .35s cubic-bezier(.2,.7,.2,1);
+  }
+  .wy_icon_card::after {
+    content: ''; position: absolute; top: 0; left: 50%; width: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--wy_gold), transparent);
+    transition: width .4s ease, left .4s ease;
+  }
+  .wy_icon_card:hover { border-color: var(--wy_gold); transform: translateY(-3px); }
+  .wy_icon_card:hover::after { width: 80%; left: 10%; }
+
+  .wy_icon_box {
+    color: var(--wy_gold);
+    margin-bottom: 16px; line-height: 1;
+    transition: transform .3s ease, color .3s ease;
+  }
+  .wy_icon_box svg { width: 36px; height: 36px; stroke-width: 1.5; }
+  .wy_icon_card:hover .wy_icon_box { transform: rotate(-6deg) scale(1.15); color: #f0d98b; }
+  .wy_icon_name {
+    font-size: 11px; letter-spacing: .18em; color: var(--wy_text_muted);
+    font-family: var(--wy_sans); font-weight: 400;
+    word-break: break-all;
+  }
+
+  .wy_usage {
+    background: var(--wy_bg_soft); border: 1px solid var(--wy_line); border-radius: 4px;
+    padding: 24px 28px; font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 12.5px; color: var(--wy_text_muted); line-height: 1.8;
+    overflow-x: auto; margin-bottom: 40px;
+  }
+  .wy_usage code { color: #b8a870; }
+  .wy_usage .wy_tag { color: var(--wy_gold); }
+  .wy_usage .wy_str { color: #d4c390; }
+
+  .wy_footer {
+    margin-top: 96px; padding-top: 32px;
+    border-top: 1px solid var(--wy_line);
+    display: flex; justify-content: space-between;
+    font-size: 11px; letter-spacing: .25em;
+    color: var(--wy_text_muted); text-transform: uppercase;
+  }
+</style>
+</head>
+<body>
+<div class="wy_container">
+
+  <header class="wy_header">
+    <a class="wy_home_link" href="index.html">← 返回首页</a>
+    <div class="wy_section_tag">N° 02 — Lucide 0.454</div>
+  </header>
+
+  <section class="wy_hero">
+    <p class="wy_hero_kicker">Geometry of Lines · 线条的几何诗意</p>
+    <h1 class="wy_hero_title">Lines, Nothing But Lines</h1>
+    <p class="wy_hero_sub">24×24 栅格 · 1.5 描边 · 圆角端头 —— 每一划都在讲同一种语言。</p>
+  </section>
+
+  <!-- Decorative -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Decorative · 装饰</h2>
+      <span class="wy_section_meta">14 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="heart"></i></div><div class="wy_icon_name">heart</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="star"></i></div><div class="wy_icon_name">star</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="moon"></i></div><div class="wy_icon_name">moon</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="sun"></i></div><div class="wy_icon_name">sun</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="flame"></i></div><div class="wy_icon_name">flame</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="feather"></i></div><div class="wy_icon_name">feather</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="palette"></i></div><div class="wy_icon_name">palette</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="camera-retro"></i></div><div class="wy_icon_name">camera-retro</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="music"></i></div><div class="wy_icon_name">music</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="book-open"></i></div><div class="wy_icon_name">book-open</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="wine"></i></div><div class="wy_icon_name">wine</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="crown"></i></div><div class="wy_icon_name">crown</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="leaf"></i></div><div class="wy_icon_name">leaf</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="diamond"></i></div><div class="wy_icon_name">diamond</div></div>
+    </div>
+  </section>
+
+  <!-- Interface -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Interface · 界面</h2>
+      <span class="wy_section_meta">14 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="home"></i></div><div class="wy_icon_name">home</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="search"></i></div><div class="wy_icon_name">search</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="bell"></i></div><div class="wy_icon_name">bell</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="mail"></i></div><div class="wy_icon_name">mail</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="settings"></i></div><div class="wy_icon_name">settings</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="user"></i></div><div class="wy_icon_name">user</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="heart-handshake"></i></div><div class="wy_icon_name">heart-handshake</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="thumbs-up"></i></div><div class="wy_icon_name">thumbs-up</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="share-2"></i></div><div class="wy_icon_name">share-2</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="bookmark"></i></div><div class="wy_icon_name">bookmark</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="map-pin"></i></div><div class="wy_icon_name">map-pin</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="phone"></i></div><div class="wy_icon_name">phone</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="calendar"></i></div><div class="wy_icon_name">calendar</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="clock"></i></div><div class="wy_icon_name">clock</div></div>
+    </div>
+  </section>
+
+  <!-- Arrows & Symbols -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Arrows · 方向</h2>
+      <span class="wy_section_meta">12 icons</span>
+    </div>
+    <div class="wy_grid">
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="arrow-right"></i></div><div class="wy_icon_name">arrow-right</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="arrow-left"></i></div><div class="wy_icon_name">arrow-left</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="arrow-up"></i></div><div class="wy_icon_name">arrow-up</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="arrow-down"></i></div><div class="wy_icon_name">arrow-down</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="chevron-right"></i></div><div class="wy_icon_name">chevron-right</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="chevron-down"></i></div><div class="wy_icon_name">chevron-down</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="plus"></i></div><div class="wy_icon_name">plus</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="minus"></i></div><div class="wy_icon_name">minus</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="x"></i></div><div class="wy_icon_name">x</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="check"></i></div><div class="wy_icon_name">check</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="zoom-in"></i></div><div class="wy_icon_name">zoom-in</div></div>
+      <div class="wy_icon_card"><div class="wy_icon_box"><i data-lucide="maximize-2"></i></div><div class="wy_icon_name">maximize-2</div></div>
+    </div>
+  </section>
+
+  <!-- 用法 -->
+  <section class="wy_section">
+    <div class="wy_section_head">
+      <h2 class="wy_section_title">Usage · 用法</h2>
+      <span class="wy_section_meta">Copy & Paste</span>
+    </div>
+    <div class="wy_usage"><pre><span class="wy_tag">&lt;script</span> <span class="wy_str">src</span>=<span class="wy_str">"cdn/lucide/lucide.min.js"</span><span class="wy_tag">&gt;&lt;/script&gt;</span>
+<span class="wy_tag">&lt;script&gt;</span>lucide.createIcons();<span class="wy_tag">&lt;/script&gt;</span>
+
+<span class="wy_tag">&lt;i</span> <span class="wy_str">data-lucide</span>=<span class="wy_str">"heart"</span><span class="wy_tag">&gt;&lt;/i&gt;</span>
+<span class="wy_tag">&lt;i</span> <span class="wy_str">data-lucide</span>=<span class="wy_str">"crown"</span><span class="wy_tag">&gt;&lt;/i&gt;</span>
+<span class="wy_tag">&lt;i</span> <span class="wy_str">data-lucide</span>=<span class="wy_str">"diamond"</span><span class="wy_tag">&gt;&lt;/i&gt;</span></pre></div>
+  </section>
+
+  <footer class="wy_footer">
+    <span><a class="wy_home_link" href="iconfont-1.html" style="color:inherit;">← N° 01 · Font Awesome</a></span>
+    <span>Lucide 0.454.0 · Inline SVG</span>
+  </footer>
+
+</div>
+
+<script src="cdn/lucide/lucide.min.js"></script>
+<script>lucide.createIcons();</script>
+</body>
+</html>

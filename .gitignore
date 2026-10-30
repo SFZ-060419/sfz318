@@ -1,0 +1,8 @@
+web-project_sfz/
+.trae/
+.screenshots/
+.trae-html-share-packages/
+sssss/
+node_modules/
+Thumbs.db
+.DS_Store
