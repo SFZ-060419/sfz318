@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>学生成绩分析面板 · 等级二（进阶）</title>
+<style>
+  /* ============================================================
+   * 学生成绩分析面板 · 样式（等级一/等级二 共用）
+   * 高级网页设计课堂实践任务
+   * ============================================================ */
+  :root{
+    --bg-1:#1a1c2c; --bg-2:#243b55;
+    --card:#ffffff; --card-soft:rgba(255,255,255,.92);
+    --ink:#1f2733; --ink-soft:#5b6472; --line:#e7eaf0;
+    --primary:#5b7cfa; --primary-d:#3f5fd9;
+    --accent:#21d4b4; --warn:#ff7a59; --gold:#f5b945; --rose:#ff5d8f;
+    --radius:14px; --shadow:0 10px 30px rgba(20,28,48,.18);
+    --shadow-sm:0 4px 14px rgba(20,28,48,.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"PingFang SC","Microsoft YaHei","Segoe UI",system-ui,sans-serif;
+    background:linear-gradient(135deg,var(--bg-1),var(--bg-2));
+    min-height:100vh;color:var(--ink);line-height:1.6;padding:24px;
+  }
+  .wrap{max-width:1180px;margin:0 auto}
+
+  /* 顶部标题栏 */
+  header.head{
+    background:var(--card-soft);border-radius:var(--radius);padding:22px 26px;
+    box-shadow:var(--shadow);display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:12px;margin-bottom:18px;
+  }
+  .head h1{font-size:22px;display:flex;align-items:center;gap:10px}
+  .head h1 .logo{
+    width:38px;height:38px;border-radius:11px;flex:none;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    display:grid;place-items:center;color:#fff;font-weight:700;
+  }
+  .head .sub{color:var(--ink-soft);font-size:13px}
+  .tag-level{
+    font-size:12px;font-weight:700;color:#fff;background:var(--primary);
+    padding:4px 10px;border-radius:20px;
+  }
+
+  /* 通用区块 */
+  section.block{
+    background:var(--card);border-radius:var(--radius);padding:20px 22px;
+    box-shadow:var(--shadow-sm);margin-bottom:18px;
+  }
+  .block-title{
+    font-size:15px;font-weight:700;display:flex;align-items:center;gap:8px;
+    margin-bottom:16px;color:var(--ink);
+  }
+  .block-title::before{
+    content:"";width:4px;height:16px;border-radius:3px;background:var(--primary);
+  }
+  .block-title .hint{font-weight:400;color:var(--ink-soft);font-size:12px}
+
+  /* 统计卡 grid */
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .stat-card{
+    background:linear-gradient(135deg,#f6f8ff,#fff);border:1px solid var(--line);
+    border-radius:12px;padding:16px 18px;position:relative;overflow:hidden;
+  }
+  .stat-card .stat-value{font-size:30px;font-weight:800;color:var(--primary);line-height:1.2}
+  .stat-card .stat-label{font-size:13px;color:var(--ink-soft);margin-top:4px}
+  .stat-card .stat-unit{font-size:14px;color:var(--ink-soft);font-weight:600;margin-left:3px}
+  .stat-card.accent .stat-value{color:var(--accent)}
+  .stat-card.warn  .stat-value{color:var(--warn)}
+  .stat-card.gold  .stat-value{color:var(--gold)}
+
+  /* 各科平均进度条 */
+  .subject-list{display:flex;flex-direction:column;gap:12px}
+  .subject-item{display:grid;grid-template-columns:80px 1fr 54px;align-items:center;gap:12px}
+  .subject-name{font-size:14px;font-weight:600}
+  .subject-bar{height:14px;border-radius:8px;background:#eef1f7;overflow:hidden}
+  .subject-bar i{display:block;height:100%;border-radius:8px;
+    background:linear-gradient(90deg,var(--primary),var(--accent));width:0;transition:width .6s ease}
+  .subject-value{text-align:right;font-weight:700;color:var(--ink)}
+
+  /* 控制区 */
+  .controls{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+  .search-box{position:relative;flex:1;min-width:220px}
+  .search-box input{
+    width:100%;padding:11px 14px 11px 38px;border:1px solid var(--line);
+    border-radius:10px;font-size:14px;outline:none;transition:border-color .2s;
+  }
+  .search-box input:focus{border-color:var(--primary)}
+  .search-box .ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--ink-soft)}
+  .btn-group{display:flex;gap:6px;background:#eef1f7;padding:4px;border-radius:10px}
+  .btn-group button{
+    border:none;background:transparent;padding:8px 14px;border-radius:7px;
+    font-size:13px;color:var(--ink-soft);cursor:pointer;transition:all .18s;
+  }
+  .btn-group button.active{background:#fff;color:var(--primary);font-weight:700;box-shadow:var(--shadow-sm)}
+
+  /* 榜单区 */
+  .rank-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .rank-card{
+    border:1px solid var(--line);border-radius:12px;padding:14px;background:#fff;
+  }
+  .rank-card h4{font-size:13px;color:var(--ink-soft);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+  .rank-card h4 .dot{width:8px;height:8px;border-radius:50%;background:var(--primary)}
+  .rank-card.champions h4 .dot{background:var(--gold)}
+  .rank-card.fail h4 .dot{background:var(--warn)}
+  .rank-list{display:flex;flex-direction:column;gap:8px}
+  .rank-row{display:flex;align-items:center;justify-content:space-between;font-size:13px}
+  .rank-row .rk{width:22px;height:22px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:12px}
+  .rank-row .rk.r1{background:#fff3d4;color:#b87d00}
+  .rank-row .rk.r2{background:#eef1f7;color:var(--ink-soft)}
+  .rank-row .rk.r3{background:#fde9dd;color:#c0602a}
+  .rank-row .nm{flex:1;margin:0 8px;font-weight:600}
+  .rank-row .vl{font-weight:700;color:var(--primary)}
+  .rank-card.fail .rank-row .vl{color:var(--warn)}
+  .champ-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:6px 0;border-bottom:1px dashed var(--line)}
+  .champ-row:last-child{border-bottom:none}
+  .champ-row .sbj{color:var(--ink-soft)}
+  .champ-row .nm{font-weight:700}
+  .champ-row .vl{color:var(--gold);font-weight:800}
+  .empty{color:var(--ink-soft);font-size:13px;font-style:italic;text-align:center;padding:10px 0}
+
+  /* 状态提示条 */
+  .status-tip{
+    padding:11px 16px;border-radius:10px;font-size:13px;display:flex;align-items:center;gap:8px;
+    background:#eaf6ff;color:#1565c0;border:1px solid #cfe8fb;
+  }
+  .status-tip.bad{background:#fff0ec;color:#c0492a;border-color:#ffd9cd}
+
+  /* 学生卡片列表 */
+  .student-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+  .student-card{
+    border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fff;
+    transition:transform .18s,box-shadow .18s;cursor:pointer;
+  }
+  .student-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+  .student-card .hd{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+  .avatar{
+    width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;
+    font-weight:700;color:#fff;font-size:15px;
+  }
+  .avatar.boy{background:linear-gradient(135deg,#5b7cfa,#7a5bfa)}
+  .avatar.girl{background:linear-gradient(135deg,#ff5d8f,#ff8fb1)}
+  .student-card .name{font-weight:700;font-size:15px}
+  .student-card .meta{font-size:12px;color:var(--ink-soft)}
+  .student-card .rank-badge{
+    margin-left:auto;font-size:12px;font-weight:700;color:#fff;background:var(--primary);
+    padding:3px 9px;border-radius:20px;
+  }
+  .student-card .rank-badge.gold{background:var(--gold)}
+  .score-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+  .score-item{text-align:center;background:#f6f8ff;border-radius:8px;padding:6px 2px}
+  .score-item .sbj{font-size:11px;color:var(--ink-soft)}
+  .score-item .val{font-size:14px;font-weight:700}
+  .score-item .val.fail{color:var(--warn)}
+  .score-item .val.full{color:var(--accent)}
+  .student-card .ft{
+    display:flex;align-items:center;justify-content:space-between;
+    border-top:1px dashed var(--line);padding-top:8px;font-size:13px;
+  }
+  .student-card .ft .total{font-weight:800;color:var(--primary)}
+  .student-card .ft .avg{color:var(--ink-soft)}
+  .student-card .detail{margin-top:0;max-height:0;overflow:hidden;transition:all .28s ease;font-size:13px;color:var(--ink-soft)}
+  .student-card.open .detail{margin-top:10px;max-height:120px}
+  .detail p{padding:3px 0}
+  .detail b{color:var(--ink)}
+
+  footer.foot{text-align:center;color:rgba(255,255,255,.7);font-size:12px;padding:14px 0}
+
+  /* 返回首页入口 */
+  .wy_home_link{
+    position:fixed;right:18px;top:18px;z-index:20;
+    display:inline-flex;align-items:center;gap:6px;
+    padding:8px 14px;border-radius:20px;text-decoration:none;
+    font-size:13px;font-weight:700;color:#fff;
+    background:linear-gradient(135deg,var(--primary),var(--accent));
+    box-shadow:var(--shadow-sm);transition:transform .18s;
+  }
+  .wy_home_link:hover{transform:translateY(-2px)}
+</style>
+</head>
+<body>
+<a class="wy_home_link" href="../index.html">← 返回首页</a>
+<div class="wrap">
+
+  <!-- ====== 顶部标题栏 ====== -->
+  <header class="head">
+    <h1><span class="logo">分</span>学生成绩分析面板</h1>
+    <div>
+      <span class="tag-level">等级二 · 进阶</span>
+      <div class="sub">DOM 查找 × 数组方法 × 函数 综合实战</div>
+    </div>
+  </header>
+
+  <!-- ====== 统计卡片区（等级一）====== -->
+  <section class="block">
+    <div class="block-title">班级概览 <span class="hint">getElementById / reduce / map / forEach</span></div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-value" id="statCount">0</div><div class="stat-label">班级人数（人）</div></div>
+      <div class="stat-card accent"><div class="stat-value" id="statTotalScore">0</div><div class="stat-label">班级总分</div></div>
+      <div class="stat-card gold"><div class="stat-value" id="statAvgScore">0</div><div class="stat-label">班级平均分</div></div>
+      <div class="stat-card warn"><div class="stat-value" id="statPassRate">0<span class="stat-unit">%</span></div><div class="stat-label">及格率（无不及格科目）</div></div>
+    </div>
+  </section>
+
+  <!-- ====== 各科平均对比（等级二）====== -->
+  <section class="block">
+    <div class="block-title">各科平均分 <span class="hint">reduce / forEach / querySelector / style</span></div>
+    <div class="subject-list" id="subjectList"></div>
+  </section>
+
+  <!-- ====== 控制区（等级一：搜索+排序）====== -->
+  <section class="block">
+    <div class="block-title">数据操作 <span class="hint">filter / sort / querySelectorAll / classList / 事件委托</span></div>
+    <div class="controls">
+      <div class="search-box">
+        <span class="ico">🔍</span>
+        <input type="text" id="searchInput" placeholder="按姓名或学号搜索…">
+      </div>
+      <div class="btn-group" id="sortBtns">
+        <button class="active" data-sort="total">按总分↓</button>
+        <button data-sort="id">按学号↑</button>
+      </div>
+      <div class="btn-group" id="filterBtns">
+        <button class="active" data-filter="all">全部</button>
+        <button data-filter="excellent">优秀</button>
+        <button data-filter="fail">含不及格</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 榜单区（等级二）====== -->
+  <section class="block">
+    <div class="block-title">榜单与预警 <span class="hint">filter / sort / slice / map / find / reduce / 节点关系</span></div>
+    <div class="status-tip" id="statusTip"></div>
+    <div class="rank-grid" style="margin-top:14px">
+      <div class="rank-card">
+        <h4><span class="dot"></span>优秀学生 Top3（平均≥85）</h4>
+        <div class="rank-list" id="topStudentsList"></div>
+      </div>
+      <div class="rank-card champions">
+        <h4><span class="dot"></span>各科状元</h4>
+        <div class="rank-list" id="subjectChampionsList"></div>
+      </div>
+      <div class="rank-card fail">
+        <h4><span class="dot"></span>不及格预警</h4>
+        <div class="rank-list" id="failWarningList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== 学生卡片列表（等级一+二）====== -->
+  <section class="block">
+    <div class="block-title">学生成绩卡片 <span class="hint">forEach / createElement / classList / closest / 节点关系 / 事件委托</span></div>
+    <div class="student-grid" id="studentList"></div>
+  </section>
+
+  <footer class="foot">高级网页设计课堂实践任务 · 学生成绩分析面板 · 等级二（进阶）</footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+/* ============================================================
+ * 等级二（进阶）· 逻辑实现
+ * ------------------------------------------------------------
+ * DOM 查找：getElementById / querySelector / querySelectorAll（静态集合）
+ *           getElementsByClassName（动态集合）/ 节点关系 / closest / classList
+ * 数组方法：forEach / map / filter / reduce / sort / find / some / every / slice
+ * 函数    ：纯函数计算 / 渲染函数 / 事件处理 / 事件委托 / 防抖
+ * ============================================================ */
+(function () {
+  "use strict";
+
+  const wy_students = window.STUDENTS;
+  const wy_subjects = window.SUBJECTS;
+
+  const wy_passLine = 60;        // 及格线
+  const wy_excellentAvg = 85;    // 优秀线
+
+  /* ---------------- 纯函数：计算类 ---------------- */
+  // 单科分数样式类（不及格 / 满分 / 普通）
+  function wy_scoreClass(wy_score) {
+    if (wy_score < wy_passLine) return "fail";
+    if (wy_score >= wy_subjects[0].full) return "full";
+    return "";
+  }
+
+  // 总分：reduce 累加五科
+  function wy_getTotal(wy_student) {
+    return wy_subjects.reduce(function (wy_sum, wy_sub) {
+      return wy_sum + wy_student[wy_sub.key];
+    }, 0);
+  }
+
+  // 平均分（保留一位小数）
+  function wy_getAvg(wy_student) {
+    return Math.round(wy_getTotal(wy_student) / wy_subjects.length * 10) / 10;
+  }
+
+  // 不及格科目：filter
+  function wy_getFails(wy_student) {
+    return wy_subjects.filter(function (wy_sub) {
+      return wy_student[wy_sub.key] < wy_passLine;
+    });
+  }
+
+  // 头像首字
+  function wy_firstName(wy_student) {
+    return wy_student.name.charAt(0);
+  }
+
+  /* ---------------- 模块1：班级概览 ---------------- */
+  function wy_renderStats(wy_list) {
+    const wy_count = wy_list.length;
+    const wy_totalScore = wy_list.reduce(function (wy_sum, wy_student) {
+      return wy_sum + wy_getTotal(wy_student);
+    }, 0);
+    const wy_avgScore = wy_count
+      ? Math.round(wy_totalScore / (wy_count * wy_subjects.length) * 10) / 10
+      : 0;
+    const wy_passCount = wy_list.filter(function (wy_student) {
+      return wy_getFails(wy_student).length === 0;
+    }).length;
+    const wy_passRate = wy_count ? Math.round(wy_passCount / wy_count * 100) : 0;
+
+    document.getElementById("statCount").textContent = wy_count;
+    document.getElementById("statTotalScore").textContent = wy_totalScore;
+    document.getElementById("statAvgScore").textContent = wy_avgScore;
+    document.getElementById("statPassRate").firstChild.textContent = wy_passRate;
+  }
+
+  /* ---------------- 模块2：各科平均分进度条 ---------------- */
+  function wy_renderSubjectAverages(wy_list) {
+    const wy_box = document.getElementById("subjectList");
+    wy_box.innerHTML = "";
+
+    wy_subjects.forEach(function (wy_sub) {
+      const wy_avg = wy_list.length
+        ? Math.round(wy_list.reduce(function (wy_sum, wy_student) {
+            return wy_sum + wy_student[wy_sub.key];
+          }, 0) / wy_list.length * 10) / 10
+        : 0;
+      const wy_pct = Math.round(wy_avg / wy_sub.full * 100);
+
+      const wy_item = document.createElement("div");
+      wy_item.className = "subject-item";
+      wy_item.innerHTML =
+        '<span class="subject-name">' + wy_sub.name + '</span>' +
+        '<span class="subject-bar"><i style="width:0"></i></span>' +
+        '<span class="subject-value">' + wy_avg + '</span>';
+      wy_box.appendChild(wy_item);
+
+      // querySelector 在条目内找进度条，下一帧设置宽度触发动画
+      const wy_bar = wy_item.querySelector("i");
+      requestAnimationFrame(function () { wy_bar.style.width = wy_pct + "%"; });
+    });
+  }
+
+  /* ---------------- 模块3：榜单与预警 ---------------- */
+  function wy_renderRankings(wy_list) {
+    /* --- 优秀学生 Top3：filter(均分≥85) → sort(总分降序) → slice(0,3) --- */
+    const wy_top = wy_list
+      .filter(function (wy_student) { return wy_getAvg(wy_student) >= wy_excellentAvg; })
+      .sort(function (wy_a, wy_b) { return wy_getTotal(wy_b) - wy_getTotal(wy_a); })
+      .slice(0, 3);
+
+    const wy_topBox = document.getElementById("topStudentsList");
+    wy_topBox.innerHTML = "";
+    if (!wy_top.length) {
+      wy_topBox.innerHTML = '<div class="empty">暂无优秀学生</div>';
+    }
+    wy_top.forEach(function (wy_student, wy_index) {
+      const wy_row = document.createElement("div");
+      wy_row.className = "rank-row";
+      wy_row.innerHTML =
+        '<span class="rk r' + (wy_index + 1) + '">' + (wy_index + 1) + '</span>' +
+        '<span class="nm">' + wy_student.name + '（' + wy_student.id + '）</span>' +
+        '<span class="vl">' + wy_getAvg(wy_student) + '</span>';
+      wy_topBox.appendChild(wy_row);
+    });
+
+    /* --- 各科状元：遍历科目，reduce 找该科最高分者 --- */
+    const wy_champBox = document.getElementById("subjectChampionsList");
+    wy_champBox.innerHTML = "";
+    if (!wy_list.length) {
+      wy_champBox.innerHTML = '<div class="empty">暂无数据</div>';
+    }
+    wy_subjects.forEach(function (wy_sub) {
+      if (!wy_list.length) return;
+      const wy_champ = wy_list.reduce(function (wy_max, wy_student) {
+        return wy_student[wy_sub.key] > wy_max[wy_sub.key] ? wy_student : wy_max;
+      }, wy_list[0]);
+
+      const wy_row = document.createElement("div");
+      wy_row.className = "champ-row";
+      wy_row.innerHTML =
+        '<span class="sbj">' + wy_sub.name + '</span>' +
+        '<span class="nm">' + wy_champ.name + '</span>' +
+        '<span class="vl">' + wy_champ[wy_sub.key] + '</span>';
+      wy_champBox.appendChild(wy_row);
+    });
+
+    /* --- 不及格预警：filter(有不及格) → sort(不及格数降序) --- */
+    const wy_fails = wy_list
+      .filter(function (wy_student) { return wy_getFails(wy_student).length > 0; })
+      .sort(function (wy_a, wy_b) {
+        return wy_getFails(wy_b).length - wy_getFails(wy_a).length;
+      });
+
+    const wy_failBox = document.getElementById("failWarningList");
+    wy_failBox.innerHTML = "";
+    if (!wy_fails.length) {
+      wy_failBox.innerHTML = '<div class="empty">全员通过，无预警</div>';
+    }
+    wy_fails.forEach(function (wy_student) {
+      const wy_names = wy_getFails(wy_student).map(function (wy_sub) {
+        return wy_sub.name;
+      }).join("、");
+      const wy_row = document.createElement("div");
+      wy_row.className = "rank-row";
+      wy_row.innerHTML =
+        '<span class="rk">' + wy_getFails(wy_student).length + '</span>' +
+        '<span class="nm">' + wy_student.name + '（' + wy_names + '）</span>' +
+        '<span class="vl">' + wy_getTotal(wy_student) + '分</span>';
+      wy_failBox.appendChild(wy_row);
+    });
+
+    /* --- 班级状态提示：some / every --- */
+    const wy_tip = document.getElementById("statusTip");
+    const wy_hasFail = wy_list.some(function (wy_student) {
+      return wy_getFails(wy_student).length > 0;
+    });
+    const wy_allExcellent = wy_list.every(function (wy_student) {
+      return wy_getAvg(wy_student) >= wy_excellentAvg;
+    });
+
+    if (!wy_list.length) {
+      wy_tip.textContent = "当前没有可统计的学生数据。";
+      wy_tip.className = "status-tip";
+    } else if (wy_allExcellent) {
+      wy_tip.textContent = "🎉 全班平均分均达到优秀线，整体表现优异！";
+      wy_tip.className = "status-tip";
+    } else if (wy_hasFail) {
+      wy_tip.textContent = "⚠ 班级中存在不及格科目，请关注预警名单中的学生。";
+      wy_tip.className = "status-tip bad";
+    } else {
+      wy_tip.textContent = "✓ 班级全员及格，继续保持！";
+      wy_tip.className = "status-tip";
+    }
+  }
+
+  /* ---------------- 模块4：学生卡片（含展开详情） ---------------- */
+  function wy_renderStudentCards(wy_list) {
+    const wy_box = document.getElementById("studentList");
+    wy_box.innerHTML = "";
+
+    wy_list.forEach(function (wy_student, wy_index) {
+      const wy_rank = wy_index + 1;
+
+      const wy_card = document.createElement("div");
+      wy_card.className = "student-card";
+      wy_card.setAttribute("data-id", wy_student.id);
+
+      // 头部
+      const wy_head = document.createElement("div");
+      wy_head.className = "hd";
+      wy_head.innerHTML =
+        '<div class="avatar ' + (wy_student.gender === "女" ? "girl" : "boy") + '">' +
+        wy_firstName(wy_student) + '</div>' +
+        '<div><div class="name">' + wy_student.name + '</div>' +
+        '<div class="meta">' + wy_student.id + ' · ' + wy_student.gender + '</div></div>' +
+        '<span class="rank-badge' + (wy_rank <= 3 ? " gold" : "") + '">第' + wy_rank + '名</span>';
+      wy_card.appendChild(wy_head);
+
+      // 五科分数
+      const wy_grid = document.createElement("div");
+      wy_grid.className = "score-grid";
+      wy_subjects.forEach(function (wy_sub) {
+        const wy_cell = document.createElement("div");
+        wy_cell.className = "score-item";
+        wy_cell.innerHTML =
+          '<div class="sbj">' + wy_sub.abbr + '</div>' +
+          '<div class="val ' + wy_scoreClass(wy_student[wy_sub.key]) + '">' +
+          wy_student[wy_sub.key] + '</div>';
+        wy_grid.appendChild(wy_cell);
+      });
+      wy_card.appendChild(wy_grid);
+
+      // 底部：总分 / 均分
+      const wy_foot = document.createElement("div");
+      wy_foot.className = "ft";
+      wy_foot.innerHTML =
+        '<span class="total">总分 ' + wy_getTotal(wy_student) + '</span>' +
+        '<span class="avg">均分 ' + wy_getAvg(wy_student) + '</span>';
+      wy_card.appendChild(wy_foot);
+
+      // 详情区（卡片最后一个子元素，供 lastElementChild 定位）
+      const wy_detail = document.createElement("div");
+      wy_detail.className = "detail";
+      const wy_fails = wy_getFails(wy_student);
+      let wy_html = "<p><b>学号：</b>" + wy_student.id + "</p>";
+      wy_html += "<p><b>性别：</b>" + wy_student.gender + "</p>";
+      if (wy_fails.length) {
+        wy_html += "<p><b>不及格科目：</b>" +
+          wy_fails.map(function (wy_sub) { return wy_sub.name; }).join("、") + "</p>";
+      } else {
+        wy_html += "<p><b>状态：</b>全科及格 ✓</p>";
+      }
+      wy_detail.innerHTML = wy_html;
+      wy_card.appendChild(wy_detail);
+
+      wy_box.appendChild(wy_card);
+    });
+  }
+
+  /* ---------------- 搜索：filter + 姓名/学号匹配 ---------------- */
+  function wy_search(wy_keyword) {
+    const wy_kw = wy_keyword.trim().toLowerCase();
+    if (!wy_kw) return wy_students.slice();
+    return wy_students.filter(function (wy_student) {
+      return wy_student.name.toLowerCase().indexOf(wy_kw) > -1 ||
+             wy_student.id.indexOf(wy_kw) > -1;
+    });
+  }
+
+  /* ---------------- 排序：总分降序 / 学号升序 ---------------- */
+  let wy_currentSort = "total";
+
+  function wy_sortList(wy_list, wy_by) {
+    const wy_arr = wy_list.slice();
+    if (wy_by === "id") {
+      wy_arr.sort(function (wy_a, wy_b) { return wy_a.id > wy_b.id ? 1 : -1; });
+    } else {
+      wy_arr.sort(function (wy_a, wy_b) { return wy_getTotal(wy_b) - wy_getTotal(wy_a); });
+    }
+    return wy_arr;
+  }
+
+  /* ---------------- 筛选：全部 / 优秀 / 含不及格 ---------------- */
+  let wy_currentFilter = "all";
+
+  function wy_filterList(wy_list, wy_mode) {
+    if (wy_mode === "excellent") {
+      return wy_list.filter(function (wy_student) {
+        return wy_getAvg(wy_student) >= wy_excellentAvg;
+      });
+    }
+    if (wy_mode === "fail") {
+      return wy_list.filter(function (wy_student) {
+        return wy_getFails(wy_student).length > 0;
+      });
+    }
+    return wy_list.slice();
+  }
+
+  /* ---------------- 主刷新：搜索 → 排序 → 筛选 → 全模块渲染 ---------------- */
+  function wy_refresh() {
+    const wy_kw = document.getElementById("searchInput").value;
+    const wy_data = wy_filterList(wy_sortList(wy_search(wy_kw), wy_currentSort), wy_currentFilter);
+    wy_renderStats(wy_data);
+    wy_renderSubjectAverages(wy_data);
+    wy_renderRankings(wy_data);
+    wy_renderStudentCards(wy_data);
+  }
+
+  /* ---------------- 事件绑定 ---------------- */
+  // ① 搜索：input + 防抖 200ms
+  let wy_timer = null;
+  document.getElementById("searchInput").addEventListener("input", function () {
+    clearTimeout(wy_timer);
+    wy_timer = setTimeout(wy_refresh, 200);
+  });
+
+  // ② 排序按钮：事件委托 + closest + querySelectorAll（静态集合）移除高亮
+  document.getElementById("sortBtns").addEventListener("click", function (wy_event) {
+    const wy_btn = wy_event.target.closest("button");
+    if (!wy_btn) return;
+    wy_currentSort = wy_btn.getAttribute("data-sort");
+    this.querySelectorAll("button").forEach(function (wy_item) {
+      wy_item.classList.remove("active");
+    });
+    wy_btn.classList.add("active");
+    wy_refresh();
+  });
+
+  // ③ 筛选按钮：事件委托 + getElementsByClassName（动态集合，while 遍历）
+  document.getElementById("filterBtns").addEventListener("click", function (wy_event) {
+    const wy_btn = wy_event.target.closest("button");
+    if (!wy_btn) return;
+    wy_currentFilter = wy_btn.getAttribute("data-filter");
+
+    // 动态集合：长度会随移除实时变化，不能直接用 forEach，改用 while
+    const wy_actives = this.getElementsByClassName("active");
+    while (wy_actives.length) {
+      wy_actives[0].classList.remove("active");
+    }
+    wy_btn.classList.add("active");
+    wy_refresh();
+  });
+
+  // ④ 卡片展开：事件委托 + closest 定位卡片 + lastElementChild 取详情区 + toggle
+  document.getElementById("studentList").addEventListener("click", function (wy_event) {
+    const wy_card = wy_event.target.closest(".student-card");
+    if (!wy_card) return;
+    const wy_detail = wy_card.lastElementChild; // 详情区是卡片最后一个子节点
+    wy_card.classList.toggle("open");
+    wy_detail.setAttribute("aria-expanded", wy_card.classList.contains("open"));
+  });
+
+  /* ---------------- 初始化 ---------------- */
+  wy_refresh();
+})();
+</script>
+</body>
+</html>
