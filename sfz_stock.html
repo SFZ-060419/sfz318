@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- ============================================================
+ * 作者：孙芳卓
+ * 创建时间：2026-11-04
+ * 使用模型：DeepSeek-V4.1-Flash
+ * 功能：A股涨跌榜 Tab 切换（沪涨/沪跌/深涨/深跌）
+ * ============================================================ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>股票涨跌榜 · sfz_stock</title>
+<style>
+  :root {
+    --sfz_bg:       #f4f5f7;
+    --sfz_card:     #ffffff;
+    --sfz_line:     #eef1f5;
+    --sfz_ink:      #1f2733;
+    --sfz_ink-soft: #7a8496;
+    --sfz_up:       #e64340;   /* 涨：红色（A 股习惯） */
+    --sfz_down:     #1ca977;   /* 跌：绿色 */
+    --sfz_primary:  #3f5fd9;
+    --sfz_shadow:   0 10px 30px rgba(20,28,48,.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    background: var(--sfz_bg);
+    min-height: 100vh; padding: 36px 20px;
+    color: var(--sfz_ink);
+  }
+
+  /* 卡片容器 */
+  .sfz_card {
+    max-width: 520px; margin: 0 auto;
+    background: var(--sfz_card); border-radius: 10px;
+    box-shadow: var(--sfz_shadow); overflow: hidden;
+  }
+
+  /* 标题栏 */
+  .sfz_head {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--sfz_line);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .sfz_head h1 { font-size: 16px; font-weight: 700; color: var(--sfz_ink); }
+  .sfz_head .sfz_market { font-size: 12px; color: var(--sfz_ink-soft); }
+
+  /* Tab 容器 + 按钮 */
+  .sfz_tab_group { padding: 0; }
+  .sfz_tab_bar {
+    display: flex; border-bottom: 1px solid var(--sfz_line);
+    background: #fafbfd;
+  }
+  .sfz_tab_btn {
+    flex: 1; border: none; background: transparent;
+    padding: 12px 8px; font-size: 14px; font-weight: 500;
+    color: var(--sfz_ink-soft); cursor: pointer; position: relative;
+    transition: color .2s;
+  }
+  .sfz_tab_btn:hover { color: var(--sfz_primary); }
+  /* 选中态：sfz_active 类，文字变深色 + 底部蓝色细线 */
+  .sfz_tab_btn.sfz_active {
+    color: var(--sfz_ink); font-weight: 700;
+  }
+  .sfz_tab_btn.sfz_active::after {
+    content: ""; position: absolute; left: 20%; right: 20%; bottom: 0;
+    height: 2px; background: var(--sfz_up);
+  }
+
+  /* 面板容器 */
+  .sfz_tab_panels { padding: 0 20px 20px; }
+  /* tab 面板默认隐藏，sfz_active 显示；本页用单一 tbody 渲染，面板更多是语义占位 */
+  .sfz_tab_panel { display: none; }
+  .sfz_tab_panel.sfz_active { display: block; }
+
+  /* 表格 */
+  table.sfz_table {
+    width: 100%; border-collapse: collapse; font-size: 14px;
+  }
+  table.sfz_table th,
+  table.sfz_table td {
+    padding: 11px 6px; text-align: right; border-bottom: 1px solid var(--sfz_line);
+  }
+  table.sfz_table th:first-child,
+  table.sfz_table td:first-child { text-align: center; width: 38px; }
+  table.sfz_table th:nth-child(2),
+  table.sfz_table td:nth-child(2) { text-align: left; }
+
+  table.sfz_table thead th {
+    font-size: 12px; font-weight: 600; color: var(--sfz_ink-soft);
+    background: #fafbfd;
+  }
+  /* 序号列（表头的"序号"对齐居中） */
+  table.sfz_table thead th.sfz_rank_h { text-align: center; }
+  /* 股票名左对齐，加粗 */
+  td.sfz_name { font-weight: 600; color: var(--sfz_ink); }
+  td.sfz_rank {
+    color: var(--sfz_ink-soft); font-size: 12px;
+  }
+
+  /* 涨跌颜色 */
+  .sfz_up   { color: var(--sfz_up);   font-weight: 700; }
+  .sfz_down { color: var(--sfz_down); font-weight: 700; }
+
+  /* 涨跌额 / 涨跌幅的小徽标 */
+  td.sfz_pct {
+    display: inline-block; min-width: 60px; text-align: center;
+    border-radius: 3px;
+  }
+  td.sfz_pct.sfz_up   { background: rgba(230,67,64,.10); }
+  td.sfz_pct.sfz_down { background: rgba(28,169,119,.10); }
+
+  /* 返回首页 */
+  .sfz_home_link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 18px; padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #3f5fd9, #7a5bfa);
+    max-width: 520px; margin-left: auto; margin-right: auto; display: block;
+    width: fit-content;
+  }
+</style>
+</head>
+<body>
+
+<div class="sfz_card">
+
+  <!-- 标题栏 -->
+  <div class="sfz_head">
+    <h1>个股涨跌榜</h1>
+    <span class="sfz_market">A股实时行情 · 示例</span>
+  </div>
+
+  <!-- Tab 组 -->
+  <div id="sfz_stock_tabs" class="sfz_tab_group">
+
+    <!-- Tab 按钮栏：沪涨为默认选中（sfz_active） -->
+    <div class="sfz_tab_bar">
+      <button class="sfz_tab_btn sfz_active">沪涨</button>
+      <button class="sfz_tab_btn">沪跌</button>
+      <button class="sfz_tab_btn">深涨</button>
+      <button class="sfz_tab_btn">深跌</button>
+    </div>
+
+    <!-- 面板区（4 个语义占位面板，实际数据渲染进 tbody） -->
+    <div class="sfz_tab_panels">
+      <div class="sfz_tab_panel sfz_active"></div>
+      <div class="sfz_tab_panel"></div>
+      <div class="sfz_tab_panel"></div>
+      <div class="sfz_tab_panel"></div>
+
+      <!-- 表格（真正的数据展示区） -->
+      <table class="sfz_table">
+        <thead>
+          <tr>
+            <th class="sfz_rank_h">序号</th>
+            <th>股票名称</th>
+            <th>现价</th>
+            <th>涨跌额</th>
+            <th>涨跌幅</th>
+          </tr>
+        </thead>
+        <tbody id="sfz_stock_tbody">
+          <!-- 由 JS sfz_stock.js 动态渲染 -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<a class="sfz_home_link" href="index.html">← 返回首页</a>
+
+<!-- 外部 JS：数据 + Tab 控制器 + 渲染 -->
+<script src="js/sfz_tabs.js"></script>
+<script src="js/sfz_stock_data.js"></script>
+<script src="js/sfz_stock.js"></script>
+</body>
+</html>

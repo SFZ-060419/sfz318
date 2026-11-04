@@ -1,13 +1,17 @@
 /**
  * sfz_TabSwitcher —— 可复用的 Tab 选项卡控制器
  * ------------------------------------------------------------
+ * 作者：孙芳卓
+ * 创建时间：2026-11-04
+ * 使用模型：DeepSeek-V4.1-Flash
  * 用法：
  *   var switcher = sfz_TabSwitcher({
- *     container: "#sfz_news_tabs",     // 外层容器选择器
- *     tabSelector: ".sfz_tab_btn",     // tab 按钮选择器
- *     panelSelector: ".sfz_tab_panel", // 内容面板选择器
- *     activeClass: "sfz_active",       // 选中时加的类名
- *     defaultIndex: 0                 // 默认选中第几项
+ *     container: "#sfz_stock_tabs",      // 外层容器选择器
+ *     tabSelector: ".sfz_tab_btn",      // tab 按钮选择器
+ *     panelSelector: ".sfz_tab_panel",  // 内容面板选择器
+ *     activeClass: "sfz_active",        // 选中时加的类名
+ *     defaultIndex: 0,                  // 默认选中第几项
+ *     onChange: function(index){ ... }  // 切换完成后的回调（可选）
  *   });
  *
  * 可实例化多个 tab 组，互不干扰。
@@ -26,11 +30,19 @@
       sfz_panelSelector: sfz_options.panelSelector || ".sfz_tab_panel",
       sfz_activeClass: sfz_options.activeClass || "sfz_active",
       sfz_defaultIndex: sfz_options.defaultIndex == null ? 0 : sfz_options.defaultIndex,
+      sfz_onChange: sfz_options.onChange || null,   // 切换完成后触发的回调
       sfz_tabs: null,
       sfz_panels: null
     };
 
-    // init 初始化：拿到 tab 按钮集合和面板集合，绑定事件
+    // sfz_triggerOnChange 触发 onChange 钩子（给外部一个机会重渲染）
+    sfz_switcher.sfz_triggerOnChange = function (sfz_index) {
+      if (typeof sfz_switcher.sfz_onChange === "function") {
+        sfz_switcher.sfz_onChange(sfz_index);
+      }
+    };
+
+    // sfz_init 初始化：拿到 tab 按钮集合和面板集合，绑定事件
     sfz_switcher.sfz_init = function () {
       if (!sfz_switcher.sfz_container) return;
       // querySelectorAll 返回静态集合，可安全 forEach
@@ -66,13 +78,15 @@
       });
     };
 
-    // sfz_setCurrentActive 给指定下标的 tab 和面板加上 active 类
+    // sfz_setCurrentActive 给指定下标的 tab 和面板加上 active 类，然后触发 onChange
     sfz_switcher.sfz_setCurrentActive = function (sfz_index) {
       if (sfz_index < 0 || sfz_index >= sfz_switcher.sfz_tabs.length) return;
       sfz_switcher.sfz_tabs[sfz_index].classList.add(sfz_switcher.sfz_activeClass);
       if (sfz_switcher.sfz_panels[sfz_index]) {
         sfz_switcher.sfz_panels[sfz_index].classList.add(sfz_switcher.sfz_activeClass);
       }
+      // 关键：在 setCurrentActive 结尾触发 onChange，通知外部"当前 index 已激活"
+      sfz_switcher.sfz_triggerOnChange(sfz_index);
     };
 
     // 启动
