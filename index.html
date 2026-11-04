@@ -11,21 +11,21 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --wy_bg:        #0b0e14;
-    --wy_bg_soft:   #12161f;
-    --wy_gold:      #d4af37;
-    --wy_gold_dim:  #8a7433;
-    --wy_text:      #e8e4d9;
-    --wy_text_muted:#8a8578;
-    --wy_line:      rgba(212, 175, 55, .15);
-    --wy_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-    --wy_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
+    --sfz_bg:        #0b0e14;
+    --sfz_bg_soft:   #12161f;
+    --sfz_gold:      #d4af37;
+    --sfz_gold_dim:  #8a7433;
+    --sfz_text:      #e8e4d9;
+    --sfz_text_muted:#8a8578;
+    --sfz_line:      rgba(212, 175, 55, .15);
+    --sfz_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --sfz_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
   }
 
   body {
-    font-family: var(--wy_sans);
-    background: var(--wy_bg);
-    color: var(--wy_text);
+    font-family: var(--sfz_sans);
+    background: var(--sfz_bg);
+    color: var(--sfz_text);
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
@@ -41,45 +41,45 @@
     pointer-events: none; z-index: 0;
   }
 
-  .wy_container {
+  .sfz_container {
     position: relative; z-index: 1;
     max-width: 1180px; margin: 0 auto;
     padding: 64px 32px 96px;
   }
 
   /* 顶部 LOGO 区 */
-  .wy_header {
+  .sfz_header {
     display: flex; justify-content: space-between; align-items: flex-start;
     margin-bottom: 80px;
-    border-bottom: 1px solid var(--wy_line);
+    border-bottom: 1px solid var(--sfz_line);
     padding-bottom: 40px;
   }
-  .wy_logo {
-    font-family: var(--wy_serif);
+  .sfz_logo {
+    font-family: var(--sfz_serif);
     font-weight: 600;
     font-size: 28px;
     letter-spacing: .08em;
-    color: var(--wy_gold);
+    color: var(--sfz_gold);
   }
-  .wy_logo_sub {
+  .sfz_logo_sub {
     display: block;
-    font-family: var(--wy_sans);
+    font-family: var(--sfz_sans);
     font-size: 10px;
     letter-spacing: .4em;
-    color: var(--wy_text_muted);
+    color: var(--sfz_text_muted);
     margin-top: 8px;
     text-transform: uppercase;
   }
-  .wy_nav { font-size: 13px; letter-spacing: .2em; color: var(--wy_text_muted); text-transform: uppercase; }
+  .sfz_nav { font-size: 13px; letter-spacing: .2em; color: var(--sfz_text_muted); text-transform: uppercase; }
 
   /* Hero 区 */
-  .wy_hero { margin-bottom: 96px; text-align: center; }
-  .wy_hero_kicker {
-    font-size: 11px; letter-spacing: .5em; color: var(--wy_gold);
+  .sfz_hero { margin-bottom: 96px; text-align: center; }
+  .sfz_hero_kicker {
+    font-size: 11px; letter-spacing: .5em; color: var(--sfz_gold);
     text-transform: uppercase; margin-bottom: 24px;
   }
-  .wy_hero_title {
-    font-family: var(--wy_serif);
+  .sfz_hero_title {
+    font-family: var(--sfz_serif);
     font-size: clamp(40px, 7vw, 88px);
     font-weight: 500;
     line-height: 1.05;
@@ -88,108 +88,108 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
     margin-bottom: 28px;
   }
-  .wy_hero_title em { font-style: italic; font-weight: 400; }
-  .wy_hero_desc {
+  .sfz_hero_title em { font-style: italic; font-weight: 400; }
+  .sfz_hero_desc {
     max-width: 620px; margin: 0 auto;
     font-size: 15px; line-height: 1.9;
-    color: var(--wy_text_muted);
+    color: var(--sfz_text_muted);
     font-weight: 300;
   }
 
   /* 卡片网格 */
-  .wy_cards {
+  .sfz_cards {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 32px;
   }
-  .wy_card {
+  .sfz_card {
     position: relative;
-    background: linear-gradient(160deg, var(--wy_bg_soft) 0%, #0e1118 100%);
-    border: 1px solid var(--wy_line);
+    background: linear-gradient(160deg, var(--sfz_bg_soft) 0%, #0e1118 100%);
+    border: 1px solid var(--sfz_line);
     border-radius: 6px;
     padding: 48px 40px;
     cursor: pointer;
     transition: all .4s cubic-bezier(.2,.7,.2,1);
     overflow: hidden;
   }
-  .wy_card::before {
+  .sfz_card::before {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(135deg, rgba(212,175,55,0) 0%, rgba(212,175,55,.04) 100%);
     opacity: 0; transition: opacity .4s ease;
   }
-  .wy_card:hover {
-    border-color: var(--wy_gold);
+  .sfz_card:hover {
+    border-color: var(--sfz_gold);
     transform: translateY(-4px);
     box-shadow: 0 20px 60px -20px rgba(212,175,55,.15);
   }
-  .wy_card:hover::before { opacity: 1; }
+  .sfz_card:hover::before { opacity: 1; }
 
-  .wy_card_num {
-    font-family: var(--wy_serif);
+  .sfz_card_num {
+    font-family: var(--sfz_serif);
     font-size: 14px; letter-spacing: .3em;
-    color: var(--wy_gold_dim); margin-bottom: 28px;
+    color: var(--sfz_gold_dim); margin-bottom: 28px;
   }
-  .wy_card_icon {
-    font-size: 48px; color: var(--wy_gold);
+  .sfz_card_icon {
+    font-size: 48px; color: var(--sfz_gold);
     margin-bottom: 24px; line-height: 1;
     transition: transform .4s ease;
   }
-  .wy_card:hover .wy_card_icon { transform: scale(1.08); }
-  .wy_card_title {
-    font-family: var(--wy_serif);
+  .sfz_card:hover .sfz_card_icon { transform: scale(1.08); }
+  .sfz_card_title {
+    font-family: var(--sfz_serif);
     font-size: 28px; font-weight: 500;
-    color: var(--wy_text); margin-bottom: 12px;
+    color: var(--sfz_text); margin-bottom: 12px;
   }
-  .wy_card_title_en {
-    font-family: var(--wy_sans);
+  .sfz_card_title_en {
+    font-family: var(--sfz_sans);
     font-size: 11px; letter-spacing: .35em;
-    color: var(--wy_text_muted); text-transform: uppercase;
+    color: var(--sfz_text_muted); text-transform: uppercase;
     margin-bottom: 24px;
   }
-  .wy_card_desc {
+  .sfz_card_desc {
     font-size: 13.5px; line-height: 1.8;
-    color: var(--wy_text_muted); margin-bottom: 32px; font-weight: 300;
+    color: var(--sfz_text_muted); margin-bottom: 32px; font-weight: 300;
   }
-  .wy_card_cta {
+  .sfz_card_cta {
     display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--wy_sans);
+    font-family: var(--sfz_sans);
     font-size: 12px; letter-spacing: .25em;
-    color: var(--wy_gold); text-transform: uppercase; text-decoration: none;
-    border-bottom: 1px solid var(--wy_gold_dim);
+    color: var(--sfz_gold); text-transform: uppercase; text-decoration: none;
+    border-bottom: 1px solid var(--sfz_gold_dim);
     padding-bottom: 4px;
     transition: gap .3s ease;
   }
-  .wy_card:hover .wy_card_cta { gap: 18px; }
+  .sfz_card:hover .sfz_card_cta { gap: 18px; }
 
   /* 页脚 */
-  .wy_footer {
+  .sfz_footer {
     margin-top: 96px; padding-top: 40px;
-    border-top: 1px solid var(--wy_line);
+    border-top: 1px solid var(--sfz_line);
     display: flex; justify-content: space-between;
     font-size: 11px; letter-spacing: .25em;
-    color: var(--wy_text_muted); text-transform: uppercase;
+    color: var(--sfz_text_muted); text-transform: uppercase;
   }
 
   @media (max-width: 720px) {
-    .wy_cards { grid-template-columns: 1fr; }
-    .wy_header { flex-direction: column; gap: 20px; }
+    .sfz_cards { grid-template-columns: 1fr; }
+    .sfz_header { flex-direction: column; gap: 20px; }
   }
 </style>
 </head>
 <body>
-<div class="wy_container">
+<div class="sfz_container">
 
   <!-- Header -->
-  <header class="wy_header">
-    <div class="wy_logo">WY<span class="wy_logo_sub">Icon · Atelier</span></div>
-    <nav class="wy_nav">Vol. 01 · 2026</nav>
+  <header class="sfz_header">
+    <div class="sfz_logo">WY<span class="sfz_logo_sub">Icon · Atelier</span></div>
+    <nav class="sfz_nav">Vol. 01 · 2026</nav>
   </header>
 
   <!-- Hero -->
-  <section class="wy_hero">
-    <p class="wy_hero_kicker">A Curated Collection · 工坊精选</p>
-    <h1 class="wy_hero_title">Icon as <em>Art</em><br>图标即艺术</h1>
-    <p class="wy_hero_desc">
+  <section class="sfz_hero">
+    <p class="sfz_hero_kicker">A Curated Collection · 工坊精选</p>
+    <h1 class="sfz_hero_title">Icon as <em>Art</em><br>图标即艺术</h1>
+    <p class="sfz_hero_desc">
       在这个视觉语言过载的时代，我们重新审视每一个图标的轮廓、笔触与留白。
       两页精选 —— 以 Font Awesome 的经典字体符号，与 Lucide 的极简 SVG，
       共同构筑一方属于设计师的静谧之所。
@@ -197,81 +197,93 @@
   </section>
 
   <!-- 入口卡片 -->
-  <section class="wy_cards">
-    <a class="wy_card" href="iconfont-1.html">
-      <div class="wy_card_num">N° 01</div>
-      <div class="wy_card_icon" aria-hidden="true">❖</div>
-      <h2 class="wy_card_title">Font Awesome</h2>
-      <p class="wy_card_title_en">Typography of Glyphs</p>
-      <p class="wy_card_desc">
+  <section class="sfz_cards">
+    <a class="sfz_card" href="iconfont-1.html">
+      <div class="sfz_card_num">N° 01</div>
+      <div class="sfz_card_icon" aria-hidden="true">❖</div>
+      <h2 class="sfz_card_title">Font Awesome</h2>
+      <p class="sfz_card_title_en">Typography of Glyphs</p>
+      <p class="sfz_card_desc">
         最被广泛采用的图标字体库。以 @font-face 方式嵌入 .woff2，
         用 CSS 伪元素渲染 Unicode 字形 —— 经典、优雅、可被任何字体样式操控。
       </p>
-      <span class="wy_card_cta">Enter →</span>
+      <span class="sfz_card_cta">Enter →</span>
     </a>
 
-    <a class="wy_card" href="iconfont-2.html">
-      <div class="wy_card_num">N° 02</div>
-      <div class="wy_card_icon" aria-hidden="true">✦</div>
-      <h2 class="wy_card_title">Lucide</h2>
-      <p class="wy_card_title_en">Geometry of Lines</p>
-      <p class="wy_card_desc">
+    <a class="sfz_card" href="iconfont-2.html">
+      <div class="sfz_card_num">N° 02</div>
+      <div class="sfz_card_icon" aria-hidden="true">✦</div>
+      <h2 class="sfz_card_title">Lucide</h2>
+      <p class="sfz_card_title_en">Geometry of Lines</p>
+      <p class="sfz_card_desc">
         扁平化、线性、统一 24×24 栅格。通过 UMD JS 将 <code>&lt;i data-lucide&gt;</code>
         实时替换为原生 SVG —— 精确、可缩放、每一条路径都可被单独着色与动画。
       </p>
-      <span class="wy_card_cta">Enter →</span>
+      <span class="sfz_card_cta">Enter →</span>
     </a>
   </section>
 
   <!-- 课堂实践 · 成绩面板 -->
-  <section class="wy_hero" style="margin-top:96px;margin-bottom:40px">
-    <p class="wy_hero_kicker">Class Practice · 课堂实践</p>
-    <h1 class="wy_hero_title" style="font-size:clamp(30px,4vw,52px)">成绩<em>面板</em></h1>
-    <p class="wy_hero_desc">
+  <section class="sfz_hero" style="margin-top:96px;margin-bottom:40px">
+    <p class="sfz_hero_kicker">Class Practice · 课堂实践</p>
+    <h1 class="sfz_hero_title" style="font-size:clamp(30px,4vw,52px)">成绩<em>面板</em></h1>
+    <p class="sfz_hero_desc">
       DOM 查找 × 数组方法 × 函数 · 综合实战，18 名学生的五科成绩，
       从统计卡到卡片列表逐层还原。
     </p>
   </section>
 
-  <section class="wy_cards">
-    <a class="wy_card" href="score-panel/starter-level1.html">
-      <div class="wy_card_num">L1</div>
-      <div class="wy_card_icon" aria-hidden="true">◈</div>
-      <h2 class="wy_card_title">等级一 · 基础</h2>
-      <p class="wy_card_title_en">Level One · Essentials</p>
-      <p class="wy_card_desc">
+  <section class="sfz_cards">
+    <a class="sfz_card" href="score-panel/starter-level1.html">
+      <div class="sfz_card_num">L1</div>
+      <div class="sfz_card_icon" aria-hidden="true">◈</div>
+      <h2 class="sfz_card_title">等级一 · 基础</h2>
+      <p class="sfz_card_title_en">Level One · Essentials</p>
+      <p class="sfz_card_desc">
         概览统计、卡片渲染、不及格预警、搜索、排序 —— 5 项核心功能，
         以 getElementById / querySelector 与 reduce / filter / sort 完成。
       </p>
-      <span class="wy_card_cta">Enter →</span>
+      <span class="sfz_card_cta">Enter →</span>
     </a>
 
-    <a class="wy_card" href="score-panel/starter-level2.html">
-      <div class="wy_card_num">L2</div>
-      <div class="wy_card_icon" aria-hidden="true">◉</div>
-      <h2 class="wy_card_title">等级二 · 进阶</h2>
-      <p class="wy_card_title_en">Level Two · Advanced</p>
-      <p class="wy_card_desc">
+    <a class="sfz_card" href="score-panel/starter-level2.html">
+      <div class="sfz_card_num">L2</div>
+      <div class="sfz_card_icon" aria-hidden="true">◉</div>
+      <h2 class="sfz_card_title">等级二 · 进阶</h2>
+      <p class="sfz_card_title_en">Level Two · Advanced</p>
+      <p class="sfz_card_desc">
         在等级一基础上新增各科平均进度条、Top3、各科状元、筛选切换、
         卡片展开与班级状态提示，共 11 项功能。
       </p>
-      <span class="wy_card_cta">Enter →</span>
+      <span class="sfz_card_cta">Enter →</span>
     </a>
 
-    <a class="wy_card" href="score-panel/target.html">
-      <div class="wy_card_num">REF</div>
-      <div class="wy_card_icon" aria-hidden="true">◆</div>
-      <h2 class="wy_card_title">目标效果</h2>
-      <p class="wy_card_title_en">Reference Answer</p>
-      <p class="wy_card_desc">
+    <a class="sfz_card" href="score-panel/target.html">
+      <div class="sfz_card_num">REF</div>
+      <div class="sfz_card_icon" aria-hidden="true">◆</div>
+      <h2 class="sfz_card_title">目标效果</h2>
+      <p class="sfz_card_title_en">Reference Answer</p>
+      <p class="sfz_card_desc">
         参考答案页面，用于与自己的实现逐像素对照：同数据、同结构、同交互。
       </p>
-      <span class="wy_card_cta">Enter →</span>
+      <span class="sfz_card_cta">Enter →</span>
+    </a>
+
+    <a class="sfz_card" href="tabs-news.html">
+      <div class="sfz_card_num">T01</div>
+      <div class="sfz_card_icon" aria-hidden="true">▣</div>
+      <h2 class="sfz_card_title">新闻 Tab</h2>
+      <p class="sfz_card_title_en">Reusable Tab Switcher</p>
+      <p class="sfz_card_desc">
+        可复用的 Tab 选项卡控制器：监听事件、先清除全部选中态、再激活当前元素。
+        JS 独立于 js/sfz_tabs.js，支持多实例。
+      </p>
+      <span class="sfz_card_cta">Enter →</span>
     </a>
   </section>
 
   <!-- Footer -->
-  <footer class="wy_footer">
+  <footer class="sfz_footer">
     <span>© 2026 WY Atelier</span>
     <span>Crafted with ♦ in HTML · CSS · SVG</span>
   </footer>

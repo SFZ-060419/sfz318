@@ -10,22 +10,22 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
   :root {
-    --wy_bg:        #0b0e14;
-    --wy_bg_soft:   #12161f;
-    --wy_gold:      #d4af37;
-    --wy_gold_dim:  #8a7433;
-    --wy_gold_soft: #b8952c;
-    --wy_text:      #e8e4d9;
-    --wy_text_muted:#7a7468;
-    --wy_text_dark: #3a372e;
-    --wy_line:      rgba(212, 175, 55, .12);
-    --wy_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-    --wy_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
+    --sfz_bg:        #0b0e14;
+    --sfz_bg_soft:   #12161f;
+    --sfz_gold:      #d4af37;
+    --sfz_gold_dim:  #8a7433;
+    --sfz_gold_soft: #b8952c;
+    --sfz_text:      #e8e4d9;
+    --sfz_text_muted:#7a7468;
+    --sfz_text_dark: #3a372e;
+    --sfz_line:      rgba(212, 175, 55, .12);
+    --sfz_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --sfz_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
   }
 
   html, body {
-    font-family: var(--wy_sans);
-    background: var(--wy_bg); color: var(--wy_text);
+    font-family: var(--sfz_sans);
+    background: var(--sfz_bg); color: var(--sfz_text);
     min-height: 100vh;
   }
 
@@ -36,39 +36,39 @@
       radial-gradient(700px 400px at 50% 110%, rgba(180,140,60,.04), transparent 60%);
   }
 
-  .wy_page { position: relative; z-index: 1; }
+  .sfz_page { position: relative; z-index: 1; }
 
   /* ======= 顶部：返回首页 + 标题 ======= */
-  .wy_header {
+  .sfz_header {
     padding: 28px 20px 20px;
     display: flex; align-items: center; justify-content: space-between;
-    border-bottom: 1px solid var(--wy_line);
+    border-bottom: 1px solid var(--sfz_line);
     max-width: 480px; margin: 0 auto;
   }
-  .wy_home_link {
+  .sfz_home_link {
     display: inline-flex; align-items: center; gap: 8px;
-    color: var(--wy_text_muted); text-decoration: none;
+    color: var(--sfz_text_muted); text-decoration: none;
     font-size: 11px; letter-spacing: .22em; text-transform: uppercase;
     transition: color .3s ease;
   }
-  .wy_home_link:hover { color: var(--wy_gold); }
-  .wy_header_title {
-    font-family: var(--wy_serif); font-weight: 500;
+  .sfz_home_link:hover { color: var(--sfz_gold); }
+  .sfz_header_title {
+    font-family: var(--sfz_serif); font-weight: 500;
     font-size: 22px; letter-spacing: .04em;
     background: linear-gradient(135deg, #f0d98b 0%, #d4af37 60%, #8a7433 100%);
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
-  .wy_header_tag {
-    font-family: var(--wy_serif); font-size: 12px; letter-spacing: .25em;
-    color: var(--wy_gold_dim);
+  .sfz_header_tag {
+    font-family: var(--sfz_serif); font-size: 12px; letter-spacing: .25em;
+    color: var(--sfz_gold_dim);
   }
 
   /* ======= 手机模拟容器 ======= */
-  .wy_stage {
+  .sfz_stage {
     max-width: 480px; margin: 48px auto 120px; padding: 0 16px;
   }
 
-  .wy_phone {
+  .sfz_phone {
     position: relative;
     background: #06080c;
     border-radius: 44px;
@@ -81,101 +81,101 @@
   }
 
   /* 手机顶部刘海 */
-  .wy_phone_notch {
+  .sfz_phone_notch {
     width: 120px; height: 26px; background: #000;
     border-radius: 0 0 18px 18px;
     margin: 0 auto 20px; position: relative;
   }
-  .wy_phone_notch::before {
+  .sfz_phone_notch::before {
     content: ''; position: absolute; top: 8px; right: 16px;
     width: 8px; height: 8px; border-radius: 50%;
     background: #2a2e3a;
   }
 
   /* ======= 应用内容区（模拟的页面） ======= */
-  .wy_app_content {
-    background: linear-gradient(180deg, var(--wy_bg_soft) 0%, #0e1118 100%);
+  .sfz_app_content {
+    background: linear-gradient(180deg, var(--sfz_bg_soft) 0%, #0e1118 100%);
     border-radius: 24px;
     min-height: 520px;
     padding: 32px 24px;
-    border: 1px solid var(--wy_line);
+    border: 1px solid var(--sfz_line);
     overflow: hidden;
   }
 
-  .wy_app_header {
+  .sfz_app_header {
     display: flex; align-items: center; justify-content: space-between;
     margin-bottom: 24px;
   }
-  .wy_app_greeting {
-    font-family: var(--wy_serif); font-weight: 500; font-size: 26px;
-    color: var(--wy_text); line-height: 1.2;
+  .sfz_app_greeting {
+    font-family: var(--sfz_serif); font-weight: 500; font-size: 26px;
+    color: var(--sfz_text); line-height: 1.2;
   }
-  .wy_app_greeting span {
-    display: block; font-family: var(--wy_sans); font-size: 11px;
-    color: var(--wy_gold); letter-spacing: .3em; text-transform: uppercase;
+  .sfz_app_greeting span {
+    display: block; font-family: var(--sfz_sans); font-size: 11px;
+    color: var(--sfz_gold); letter-spacing: .3em; text-transform: uppercase;
     margin-bottom: 6px; font-weight: 500;
   }
-  .wy_app_avatar {
+  .sfz_app_avatar {
     width: 44px; height: 44px; border-radius: 50%;
     background: linear-gradient(135deg, #d4af37, #8a7433);
-    border: 1px solid var(--wy_gold);
+    border: 1px solid var(--sfz_gold);
   }
 
   /* 卡片 */
-  .wy_card_list { display: flex; flex-direction: column; gap: 14px; }
-  .wy_app_card {
-    background: var(--wy_bg);
-    border: 1px solid var(--wy_line);
+  .sfz_card_list { display: flex; flex-direction: column; gap: 14px; }
+  .sfz_app_card {
+    background: var(--sfz_bg);
+    border: 1px solid var(--sfz_line);
     border-radius: 14px;
     padding: 18px 20px;
     display: flex; align-items: center; gap: 16px;
   }
-  .wy_app_card_icon {
+  .sfz_app_card_icon {
     width: 40px; height: 40px; border-radius: 10px;
     background: rgba(212,175,55,.08);
     display: flex; align-items: center; justify-content: center;
-    color: var(--wy_gold); font-size: 20px;
+    color: var(--sfz_gold); font-size: 20px;
   }
-  .wy_app_card_text { flex: 1; }
-  .wy_app_card_title { font-size: 14px; color: var(--wy_text); font-weight: 500; margin-bottom: 2px; }
-  .wy_app_card_sub { font-size: 11px; color: var(--wy_text_muted); font-weight: 300; }
-  .wy_app_card_arrow { color: var(--wy_gold_dim); font-size: 14px; }
+  .sfz_app_card_text { flex: 1; }
+  .sfz_app_card_title { font-size: 14px; color: var(--sfz_text); font-weight: 500; margin-bottom: 2px; }
+  .sfz_app_card_sub { font-size: 11px; color: var(--sfz_text_muted); font-weight: 300; }
+  .sfz_app_card_arrow { color: var(--sfz_gold_dim); font-size: 14px; }
 
   /* ======= 底部 Tab Bar ======= */
-  .wy_tabbar-wrap {
+  .sfz_tabbar-wrap {
     margin-top: 24px;
     position: relative;
   }
 
-  .wy_tabbar {
+  .sfz_tabbar {
     position: relative;
     display: flex;
     align-items: stretch;
     background: linear-gradient(180deg, rgba(20,24,32,.98) 0%, rgba(12,15,20,.98) 100%);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--wy_line);
+    border-top: 1px solid var(--sfz_line);
     border-radius: 0 0 24px 24px;
     padding: 10px 8px calc(10px + env(safe-area-inset-bottom));
   }
 
   /* Tab 项 */
-  .wy_tab {
+  .sfz_tab {
     position: relative;
     flex: 1;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     padding: 10px 0 8px;
     cursor: pointer;
-    color: var(--wy_text_muted);
+    color: var(--sfz_text_muted);
     text-decoration: none;
     transition: color .25s ease;
-    font-family: var(--wy_sans);
+    font-family: var(--sfz_sans);
     font-size: 10.5px;
     letter-spacing: .08em;
   }
 
-  .wy_tab_icon {
+  .sfz_tab_icon {
     font-family: "iconfont";
     font-size: 22px;
     line-height: 1;
@@ -185,23 +185,23 @@
   }
 
   /* Active 状态 */
-  .wy_tab.wy_tab_active {
-    color: var(--wy_gold);
+  .sfz_tab.sfz_tab_active {
+    color: var(--sfz_gold);
   }
-  .wy_tab.wy_tab_active .wy_tab_icon {
+  .sfz_tab.sfz_tab_active .sfz_tab_icon {
     transform: translateY(-2px);
     text-shadow: 0 0 12px rgba(212,175,55,.5);
   }
-  .wy_tab.wy_tab_active::before {
+  .sfz_tab.sfz_tab_active::before {
     content: '';
     position: absolute; top: 0; left: 50%; transform: translateX(-50%);
     width: 20px; height: 2px;
-    background: linear-gradient(90deg, transparent, var(--wy_gold), transparent);
+    background: linear-gradient(90deg, transparent, var(--sfz_gold), transparent);
     border-radius: 2px;
   }
 
   /* ======= 徽章：数字 ======= */
-  .wy_badge {
+  .sfz_badge {
     position: absolute;
     top: -2px; right: 50%;
     transform: translateX(14px);
@@ -214,18 +214,18 @@
     font-weight: 600;
     line-height: 16px;
     text-align: center;
-    font-family: var(--wy_sans);
+    font-family: var(--sfz_sans);
     box-shadow: 0 2px 6px rgba(255,71,87,.4);
     z-index: 2;
-    animation: wy_badgePop .3s ease-out;
+    animation: sfz_badgePop .3s ease-out;
   }
-  .wy_badge.wy_badge_large {
+  .sfz_badge.sfz_badge_large {
     min-width: 18px; height: 18px; line-height: 18px; font-size: 10px;
     transform: translateX(16px);
   }
 
   /* ======= 红点 ======= */
-  .wy_dot {
+  .sfz_dot {
     position: absolute;
     top: -1px; right: 50%;
     transform: translateX(13px);
@@ -234,120 +234,120 @@
     border-radius: 50%;
     box-shadow: 0 0 0 2px rgba(12,15,20,.9), 0 2px 6px rgba(255,71,87,.5);
     z-index: 2;
-    animation: wy_dotPulse 1.8s ease-in-out infinite;
+    animation: sfz_dotPulse 1.8s ease-in-out infinite;
   }
 
-  @keyframes wy_badgePop {
+  @keyframes sfz_badgePop {
     0%   { transform: translateX(14px) scale(0); }
     60%  { transform: translateX(14px) scale(1.15); }
     100% { transform: translateX(14px) scale(1); }
   }
-  @keyframes wy_dotPulse {
+  @keyframes sfz_dotPulse {
     0%, 100% { transform: translateX(13px) scale(1); opacity: 1; }
     50%      { transform: translateX(13px) scale(1.3); opacity: .75; }
   }
 
   /* ======= 页脚 ======= */
-  .wy_footer {
+  .sfz_footer {
     max-width: 480px; margin: 0 auto;
     padding: 24px 20px 64px;
-    border-top: 1px solid var(--wy_line);
+    border-top: 1px solid var(--sfz_line);
     display: flex; justify-content: space-between;
     font-size: 10px; letter-spacing: .22em;
-    color: var(--wy_text_muted); text-transform: uppercase;
+    color: var(--sfz_text_muted); text-transform: uppercase;
   }
-  .wy_footer a { color: inherit; text-decoration: none; }
+  .sfz_footer a { color: inherit; text-decoration: none; }
 
   /* 桌面端预览说明 */
-  .wy_note {
+  .sfz_note {
     text-align: center; padding: 24px 20px 0;
     font-size: 11px; letter-spacing: .2em;
-    color: var(--wy_gold_dim); text-transform: uppercase;
+    color: var(--sfz_gold_dim); text-transform: uppercase;
   }
 </style>
 </head>
 <body>
-<div class="wy_page">
+<div class="sfz_page">
 
-  <header class="wy_header">
-    <a class="wy_home_link" href="index.html">← Home</a>
-    <h1 class="wy_header_title">Tab Bar</h1>
-    <div class="wy_header_tag">N° 03 · Font</div>
+  <header class="sfz_header">
+    <a class="sfz_home_link" href="index.html">← Home</a>
+    <h1 class="sfz_header_title">Tab Bar</h1>
+    <div class="sfz_header_tag">N° 03 · Font</div>
   </header>
 
-  <p class="wy_note">Mobile Preview · 375pt</p>
+  <p class="sfz_note">Mobile Preview · 375pt</p>
 
-  <div class="wy_stage">
-    <div class="wy_phone">
-      <div class="wy_phone_notch"></div>
+  <div class="sfz_stage">
+    <div class="sfz_phone">
+      <div class="sfz_phone_notch"></div>
 
       <!-- App 内容区 -->
-      <div class="wy_app_content">
-        <div class="wy_app_header">
-          <div class="wy_app_greeting">
+      <div class="sfz_app_content">
+        <div class="sfz_app_header">
+          <div class="sfz_app_greeting">
             <span>Good Evening</span>
             欢迎回来，Sfz
           </div>
-          <div class="wy_app_avatar"></div>
+          <div class="sfz_app_avatar"></div>
         </div>
 
-        <div class="wy_card_list">
-          <div class="wy_app_card">
-            <div class="wy_app_card_icon iconfont icon-xz"></div>
-            <div class="wy_app_card_text">
-              <div class="wy_app_card_title">我的收藏</div>
-              <div class="wy_app_card_sub">12 件精选 · 今日更新 1</div>
+        <div class="sfz_card_list">
+          <div class="sfz_app_card">
+            <div class="sfz_app_card_icon iconfont icon-xz"></div>
+            <div class="sfz_app_card_text">
+              <div class="sfz_app_card_title">我的收藏</div>
+              <div class="sfz_app_card_sub">12 件精选 · 今日更新 1</div>
             </div>
-            <div class="wy_app_card_arrow">›</div>
+            <div class="sfz_app_card_arrow">›</div>
           </div>
-          <div class="wy_app_card">
-            <div class="wy_app_card_icon iconfont icon-gouwuche"></div>
-            <div class="wy_app_card_text">
-              <div class="wy_app_card_title">购物车</div>
-              <div class="wy_app_card_sub">3 件商品 · ¥ 876.00</div>
+          <div class="sfz_app_card">
+            <div class="sfz_app_card_icon iconfont icon-gouwuche"></div>
+            <div class="sfz_app_card_text">
+              <div class="sfz_app_card_title">购物车</div>
+              <div class="sfz_app_card_sub">3 件商品 · ¥ 876.00</div>
             </div>
-            <div class="wy_app_card_arrow">›</div>
+            <div class="sfz_app_card_arrow">›</div>
           </div>
-          <div class="wy_app_card">
-            <div class="wy_app_card_icon iconfont icon-fenxiang"></div>
-            <div class="wy_app_card_text">
-              <div class="wy_app_card_title">分享给好友</div>
-              <div class="wy_app_card_sub">推荐即可获赠 20 积分</div>
+          <div class="sfz_app_card">
+            <div class="sfz_app_card_icon iconfont icon-fenxiang"></div>
+            <div class="sfz_app_card_text">
+              <div class="sfz_app_card_title">分享给好友</div>
+              <div class="sfz_app_card_sub">推荐即可获赠 20 积分</div>
             </div>
-            <div class="wy_app_card_arrow">›</div>
+            <div class="sfz_app_card_arrow">›</div>
           </div>
         </div>
       </div>
 
       <!-- ===== 底部 Tab Bar ===== -->
-      <nav class="wy_tabbar-wrap">
-        <div class="wy_tabbar">
+      <nav class="sfz_tabbar-wrap">
+        <div class="sfz_tabbar">
 
           <!-- Tab 1 收藏 · 默认激活 + 红点 -->
-          <a class="wy_tab wy_tab_active" href="#" data-tab="home">
-            <i class="wy_tab_icon iconfont icon-xz"></i>
+          <a class="sfz_tab sfz_tab_active" href="#" data-tab="home">
+            <i class="sfz_tab_icon iconfont icon-xz"></i>
             <span>收藏</span>
-            <span class="wy_dot" aria-label="未读"></span>
+            <span class="sfz_dot" aria-label="未读"></span>
           </a>
 
           <!-- Tab 2 分享 -->
-          <a class="wy_tab" href="#" data-tab="share">
-            <i class="wy_tab_icon iconfont icon-fenxiang"></i>
+          <a class="sfz_tab" href="#" data-tab="share">
+            <i class="sfz_tab_icon iconfont icon-fenxiang"></i>
             <span>分享</span>
           </a>
 
           <!-- Tab 3 购物车 · 数字徽章 3 -->
-          <a class="wy_tab" href="#" data-tab="cart">
-            <i class="wy_tab_icon iconfont icon-gouwuche"></i>
+          <a class="sfz_tab" href="#" data-tab="cart">
+            <i class="sfz_tab_icon iconfont icon-gouwuche"></i>
             <span>购物</span>
-            <span class="wy_badge">3</span>
+            <span class="sfz_badge">3</span>
           </a>
 
           <!-- Tab 4 转发/消息 · 数字徽章 12（大号） -->
-          <a class="wy_tab" href="#" data-tab="msg">
-            <i class="wy_tab_icon iconfont icon-24px"></i>
+          <a class="sfz_tab" href="#" data-tab="msg">
+            <i class="sfz_tab_icon iconfont icon-24px"></i>
             <span>消息</span>
-            <span class="wy_badge wy_badge_large">12</span>
+            <span class="sfz_badge sfz_badge_large">12</span>
           </a>
 
         </div>
@@ -356,7 +356,7 @@
     </div>
   </div>
 
-  <footer class="wy_footer">
+  <footer class="sfz_footer">
     <span><a href="iconfont-4.html">→ N° 04 · SVG 版</a></span>
     <span>iconfont · Font Glyphs</span>
   </footer>
@@ -365,12 +365,12 @@
 
 <script>
   // Tab 切换
-  const wy_tabs = document.querySelectorAll('.wy_tab');
-  wy_tabs.forEach(wy_tab => {
-    wy_tab.addEventListener('click', wy_e => {
-      wy_e.preventDefault();
-      wy_tabs.forEach(t => t.classList.remove('wy_tab_active'));
-      wy_tab.classList.add('wy_tab_active');
+  const sfz_tabs = document.querySelectorAll('.sfz_tab');
+  sfz_tabs.forEach(sfz_tab => {
+    sfz_tab.addEventListener('click', sfz_e => {
+      sfz_e.preventDefault();
+      sfz_tabs.forEach(t => t.classList.remove('sfz_tab_active'));
+      sfz_tab.classList.add('sfz_tab_active');
     });
   });
 </script>

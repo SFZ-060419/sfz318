@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<!-- ============================================================
+ * 作者：孙芳卓
+ * 创建时间：2026-11-04
+ * 使用模型：DeepSeek-V4.1-Flash
+ * 功能：Tab 选项卡新闻面板（4 个分类）
+ * ============================================================ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新闻 Tab 选项卡 · 可复用切换</title>
+<style>
+  /* 全局与容器 */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+    background: linear-gradient(135deg, #1a1c2c 0%, #243b55 100%);
+    min-height: 100vh; padding: 40px 20px; color: #1f2733;
+  }
+  .sfz_page {
+    max-width: 760px; margin: 0 auto;
+    background: rgba(255,255,255,.96); border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(20,28,48,.25);
+    overflow: hidden;
+  }
+
+  /* 页面头 */
+  .sfz_page_head {
+    padding: 24px 28px; border-bottom: 1px solid #eef1f7;
+    background: linear-gradient(135deg, #f6f8ff, #fff);
+  }
+  .sfz_page_head h1 { font-size: 22px; font-weight: 700; color: #1f2733; }
+  .sfz_page_head p { font-size: 13px; color: #7a8496; margin-top: 6px; }
+
+  /* Tab 容器 */
+  .sfz_tab_group { padding: 0 28px 28px; }
+
+  /* Tab 按钮栏 */
+  .sfz_tab_bar {
+    display: flex; gap: 4px; padding: 8px; margin-top: 20px;
+    background: #f0f3f8; border-radius: 12px;
+  }
+  .sfz_tab_btn {
+    flex: 1; border: none; padding: 12px 14px;
+    background: transparent; border-radius: 9px;
+    font-size: 14px; font-weight: 600; color: #7a8496;
+    cursor: pointer; transition: all .2s ease;
+  }
+  .sfz_tab_btn:hover { color: #3f5fd9; }
+  /* 选中态：sfz_active 类由 JS 动态添加 */
+  .sfz_tab_btn.sfz_active {
+    background: #fff; color: #3f5fd9;
+    box-shadow: 0 4px 14px rgba(63,95,217,.18);
+  }
+
+  /* 面板容器 */
+  .sfz_tab_panels { margin-top: 20px; }
+  /* 面板默认隐藏，sfz_active 显示 */
+  .sfz_tab_panel { display: none; animation: sfz_fade .25s ease; }
+  .sfz_tab_panel.sfz_active { display: block; }
+
+  /* 面板内容 */
+  @keyframes sfz_fade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .sfz_news_list { list-style: none; }
+  .sfz_news_item {
+    padding: 14px 0; border-bottom: 1px dashed #eef1f7;
+    display: flex; gap: 10px;
+  }
+  .sfz_news_item:last-child { border-bottom: none; }
+  .sfz_news_idx {
+    width: 22px; height: 22px; border-radius: 50%; flex: none;
+    display: grid; place-items: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    background: linear-gradient(135deg, #5b7cfa, #7a5bfa);
+    margin-top: 2px;
+  }
+  .sfz_news_item:nth-child(1) .sfz_news_idx { background: linear-gradient(135deg, #f5b945, #ff7a59); }
+  .sfz_news_item:nth-child(2) .sfz_news_idx { background: linear-gradient(135deg, #21d4b4, #5b7cfa); }
+  .sfz_news_title { font-size: 14px; font-weight: 600; color: #1f2733; }
+  .sfz_news_desc { font-size: 12px; color: #7a8496; margin-top: 3px; }
+
+  /* 返回首页 */
+  .sfz_home_link {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 16px; padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: #fff;
+    text-decoration: none;
+    background: linear-gradient(135deg, #5b7cfa, #7a5bfa);
+  }
+</style>
+</head>
+<body>
+
+<div class="sfz_page">
+  <header class="sfz_page_head">
+    <h1>📰 新闻中心</h1>
+    <p>可复用的 Tab 选项卡 · 点击上方按钮切换分类</p>
+  </header>
+
+  <!-- Tab 组：唯一根容器，用于 sfz_TabSwitcher 定位 -->
+  <div id="sfz_news_tabs" class="sfz_tab_group">
+
+    <!-- ① Tab 按钮栏：4 个分类按钮，国内默认选中 -->
+    <div class="sfz_tab_bar">
+      <button class="sfz_tab_btn sfz_active" data-panel="panel-domestic">国内新闻</button>
+      <button class="sfz_tab_btn"           data-panel="panel-province">省内新闻</button>
+      <button class="sfz_tab_btn"           data-panel="panel-global">国际新闻</button>
+      <button class="sfz_tab_btn"           data-panel="panel-hot">最热新闻</button>
+    </div>
+
+    <!-- ② 内容面板：与按钮一一对应，sfz_active 控制显示 -->
+    <div class="sfz_tab_panels">
+
+      <!-- 国内新闻（默认显示） -->
+      <div class="sfz_tab_panel sfz_active" data-panel="panel-domestic">
+        <ul class="sfz_news_list">
+          <li class="sfz_news_item"><span class="sfz_news_idx">1</span><div><div class="sfz_news_title">全国科技创新大会在北京召开</div><div class="sfz_news_desc">部署新一轮科技体制改革重点任务</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">2</span><div><div class="sfz_news_title">高铁网络运营里程突破 5 万公里</div><div class="sfz_news_desc">八纵八横主骨架全面成型</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">3</span><div><div class="sfz_news_title">新能源汽车 10 月销量再创新高</div><div class="sfz_news_desc">国产品牌市占率稳步提升</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">4</span><div><div class="sfz_news_title">国家公园体系新增 5 处试点</div><div class="sfz_news_desc">生物多样性保护进入新阶段</div></div></li>
+        </ul>
+      </div>
+
+      <!-- 省内新闻 -->
+      <div class="sfz_tab_panel" data-panel="panel-province">
+        <ul class="sfz_news_list">
+          <li class="sfz_news_item"><span class="sfz_news_idx">1</span><div><div class="sfz_news_title">省集成电路产业园正式开园</div><div class="sfz_news_desc">首期投资超 200 亿元</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">2</span><div><div class="sfz_news_title">省内首条低空旅游航线试飞成功</div><div class="sfz_news_desc">打造 1 小时都市圈空中快线</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">3</span><div><div class="sfz_news_title">乡村振兴示范县名单公布</div><div class="sfz_news_desc">12 个县市入选国家级试点</div></div></li>
+        </ul>
+      </div>
+
+      <!-- 国际新闻 -->
+      <div class="sfz_tab_panel" data-panel="panel-global">
+        <ul class="sfz_news_list">
+          <li class="sfz_news_item"><span class="sfz_news_idx">1</span><div><div class="sfz_news_title">联合国气候大会达成新减排协议</div><div class="sfz_news_desc">全球 190 国签署框架文件</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">2</span><div><div class="sfz_news_title">太空探索公司完成第 20 次星舰试飞</div><div class="sfz_news_desc">垂直降落技术再获突破</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">3</span><div><div class="sfz_news_title">跨境电商零售额同比增长 42%</div><div class="sfz_news_desc">RCEP 红利持续释放</div></div></li>
+        </ul>
+      </div>
+
+      <!-- 最热新闻 -->
+      <div class="sfz_tab_panel" data-panel="panel-hot">
+        <ul class="sfz_news_list">
+          <li class="sfz_news_item"><span class="sfz_news_idx">1</span><div><div class="sfz_news_title">双十一天猫京东合计破万亿</div><div class="sfz_news_desc">直播电商贡献超四成 GMV</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">2</span><div><div class="sfz_news_title">国产 AI 大模型登顶全球榜单</div><div class="sfz_news_desc">在 11 项基准测试中取得 SOTA</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">3</span><div><div class="sfz_news_title">爆款网剧单集播放量破 30 亿</div><div class="sfz_news_desc">话题量连续 21 天占据热搜</div></div></li>
+          <li class="sfz_news_item"><span class="sfz_news_idx">4</span><div><div class="sfz_news_title">年轻人开始流行"反向消费"</div><div class="sfz_news_desc">品质与性价比成新潮流关键词</div></div></li>
+        </ul>
+      </div>
+
+    </div><!-- / .sfz_tab_panels -->
+  </div><!-- / #sfz_news_tabs -->
+
+</div>
+
+<!-- 返回首页 -->
+<a class="sfz_home_link" href="index.html">← 返回首页</a>
+
+<!-- 外部 JS：可复用 Tab 切换器 -->
+<script src="js/sfz_tabs.js"></script>
+<script>
+  // 初始化 Tab 切换器实例：绑定到 #sfz_news_tabs 容器，默认选中第 0 项（国内新闻）
+  var sfz_newsSwitcher = sfz_TabSwitcher({
+    container: "#sfz_news_tabs",
+    tabSelector: ".sfz_tab_btn",
+    panelSelector: ".sfz_tab_panel",
+    activeClass: "sfz_active",
+    defaultIndex: 0   // 国内新闻默认选中（下标 0）
+  });
+
+  // ↓ 演示：如果页面里有第二个 tab 组，可以再实例化一个，互不干扰
+  // var sfz_otherSwitcher = sfz_TabSwitcher({ container: "#sfz_other_tabs", defaultIndex: 1 });
+</script>
+</body>
+</html>

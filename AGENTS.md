@@ -12,11 +12,13 @@
 - ⚠️ `web-project_sfz/sfz318/web-project_sfz/` 内嵌一个多余的 `.git`（历史遗留）。所有 git 命令必须显式 `-C "E:\高级网页制作\web-project_sfz"`，防止进错仓库。
 - `.trae/`、`.screenshots/`、`.trae-html-share-packages/` 是编辑器产物；`sssss/` 是空目录，忽略。
 
-## 硬规则（来源：`.trae/rules/wy_conventions.md`）
+## 硬规则（来源：`.trae/rules/sfz_conventions.md`）
 
-1. **wy_ 前缀**：所有新增 CSS 类名、id、JS 变量/函数必须以 `wy_` 开头（如 `wy_container`、`wy_nav_link_active`）。旧代码不改造，只约束新写的代码。
-2. **提示词日志**：执行任何用户指令**之前**，先把该提示词**追加**写入根目录 `wy_prompt.md`（含时间、模型名、原始提示词，格式见该文件头部）。只追加，绝不覆盖。
+1. **sfz_ 前缀**：所有新增 CSS 类名、id、JS 变量/函数必须以 `sfz_` 开头（如 `sfz_container`、`sfz_nav_link_active`）。旧代码不改造，只约束新写的代码。
+2. **提示词日志**：执行任何用户指令**之前**，先把该提示词**追加**写入根目录 `sfz_prompt.md`（含时间、模型名、原始提示词，格式见该文件头部）。只追加，绝不覆盖。
 3. **首页互链**：新建 HTML 文件必须有返回首页的链接（子目录内用相对路径如 `../index.html`），并在对应 `index.html` 中加入指向新页面的入口——不允许孤立页面。旧页面不强制改造。
+4. **HTML 头部注释**：新建 HTML 文件时，在 `<head>` 内 `<title>` 之前插入四行头部注释（作者=孙芳卓、创建时间、使用模型、功能名称）。详见 `.trae/rules/sfz_conventions.md`。
+5. **JS 函数注释**：新写的 JS 函数（含 IIFE 内部、事件处理函数）在紧上方加一行 `//` 注释说明主要功能。旧函数不强制补注释。
 
 ## Git 工作流
 

@@ -169,7 +169,7 @@
   footer.foot{text-align:center;color:rgba(255,255,255,.7);font-size:12px;padding:14px 0}
 
   /* 返回首页入口 */
-  .wy_home_link{
+  .sfz_home_link{
     position:fixed;right:18px;top:18px;z-index:20;
     display:inline-flex;align-items:center;gap:6px;
     padding:8px 14px;border-radius:20px;text-decoration:none;
@@ -177,11 +177,11 @@
     background:linear-gradient(135deg,var(--primary),var(--accent));
     box-shadow:var(--shadow-sm);transition:transform .18s;
   }
-  .wy_home_link:hover{transform:translateY(-2px)}
+  .sfz_home_link:hover{transform:translateY(-2px)}
 </style>
 </head>
 <body>
-<a class="wy_home_link" href="../index.html">← 返回首页</a>
+<a class="sfz_home_link" href="../index.html">← 返回首页</a>
 <div class="wrap">
 
   <!-- ====== 顶部标题栏 ====== -->
@@ -272,344 +272,344 @@
 (function () {
   "use strict";
 
-  const wy_students = window.STUDENTS;
-  const wy_subjects = window.SUBJECTS;
+  const sfz_students = window.STUDENTS;
+  const sfz_subjects = window.SUBJECTS;
 
-  const wy_passLine = 60;        // 及格线
-  const wy_excellentAvg = 85;    // 优秀线
+  const sfz_passLine = 60;        // 及格线
+  const sfz_excellentAvg = 85;    // 优秀线
 
   /* ---------------- 纯函数：计算类 ---------------- */
   // 单科分数样式类（不及格 / 满分 / 普通）
-  function wy_scoreClass(wy_score) {
-    if (wy_score < wy_passLine) return "fail";
-    if (wy_score >= wy_subjects[0].full) return "full";
+  function sfz_scoreClass(sfz_score) {
+    if (sfz_score < sfz_passLine) return "fail";
+    if (sfz_score >= sfz_subjects[0].full) return "full";
     return "";
   }
 
   // 总分：reduce 累加五科
-  function wy_getTotal(wy_student) {
-    return wy_subjects.reduce(function (wy_sum, wy_sub) {
-      return wy_sum + wy_student[wy_sub.key];
+  function sfz_getTotal(sfz_student) {
+    return sfz_subjects.reduce(function (sfz_sum, sfz_sub) {
+      return sfz_sum + sfz_student[sfz_sub.key];
     }, 0);
   }
 
   // 平均分（保留一位小数）
-  function wy_getAvg(wy_student) {
-    return Math.round(wy_getTotal(wy_student) / wy_subjects.length * 10) / 10;
+  function sfz_getAvg(sfz_student) {
+    return Math.round(sfz_getTotal(sfz_student) / sfz_subjects.length * 10) / 10;
   }
 
   // 不及格科目：filter
-  function wy_getFails(wy_student) {
-    return wy_subjects.filter(function (wy_sub) {
-      return wy_student[wy_sub.key] < wy_passLine;
+  function sfz_getFails(sfz_student) {
+    return sfz_subjects.filter(function (sfz_sub) {
+      return sfz_student[sfz_sub.key] < sfz_passLine;
     });
   }
 
   // 头像首字
-  function wy_firstName(wy_student) {
-    return wy_student.name.charAt(0);
+  function sfz_firstName(sfz_student) {
+    return sfz_student.name.charAt(0);
   }
 
   /* ---------------- 模块1：班级概览 ---------------- */
-  function wy_renderStats(wy_list) {
-    const wy_count = wy_list.length;
-    const wy_totalScore = wy_list.reduce(function (wy_sum, wy_student) {
-      return wy_sum + wy_getTotal(wy_student);
+  function sfz_renderStats(sfz_list) {
+    const sfz_count = sfz_list.length;
+    const sfz_totalScore = sfz_list.reduce(function (sfz_sum, sfz_student) {
+      return sfz_sum + sfz_getTotal(sfz_student);
     }, 0);
-    const wy_avgScore = wy_count
-      ? Math.round(wy_totalScore / (wy_count * wy_subjects.length) * 10) / 10
+    const sfz_avgScore = sfz_count
+      ? Math.round(sfz_totalScore / (sfz_count * sfz_subjects.length) * 10) / 10
       : 0;
-    const wy_passCount = wy_list.filter(function (wy_student) {
-      return wy_getFails(wy_student).length === 0;
+    const sfz_passCount = sfz_list.filter(function (sfz_student) {
+      return sfz_getFails(sfz_student).length === 0;
     }).length;
-    const wy_passRate = wy_count ? Math.round(wy_passCount / wy_count * 100) : 0;
+    const sfz_passRate = sfz_count ? Math.round(sfz_passCount / sfz_count * 100) : 0;
 
-    document.getElementById("statCount").textContent = wy_count;
-    document.getElementById("statTotalScore").textContent = wy_totalScore;
-    document.getElementById("statAvgScore").textContent = wy_avgScore;
-    document.getElementById("statPassRate").firstChild.textContent = wy_passRate;
+    document.getElementById("statCount").textContent = sfz_count;
+    document.getElementById("statTotalScore").textContent = sfz_totalScore;
+    document.getElementById("statAvgScore").textContent = sfz_avgScore;
+    document.getElementById("statPassRate").firstChild.textContent = sfz_passRate;
   }
 
   /* ---------------- 模块2：各科平均分进度条 ---------------- */
-  function wy_renderSubjectAverages(wy_list) {
-    const wy_box = document.getElementById("subjectList");
-    wy_box.innerHTML = "";
+  function sfz_renderSubjectAverages(sfz_list) {
+    const sfz_box = document.getElementById("subjectList");
+    sfz_box.innerHTML = "";
 
-    wy_subjects.forEach(function (wy_sub) {
-      const wy_avg = wy_list.length
-        ? Math.round(wy_list.reduce(function (wy_sum, wy_student) {
-            return wy_sum + wy_student[wy_sub.key];
-          }, 0) / wy_list.length * 10) / 10
+    sfz_subjects.forEach(function (sfz_sub) {
+      const sfz_avg = sfz_list.length
+        ? Math.round(sfz_list.reduce(function (sfz_sum, sfz_student) {
+            return sfz_sum + sfz_student[sfz_sub.key];
+          }, 0) / sfz_list.length * 10) / 10
         : 0;
-      const wy_pct = Math.round(wy_avg / wy_sub.full * 100);
+      const sfz_pct = Math.round(sfz_avg / sfz_sub.full * 100);
 
-      const wy_item = document.createElement("div");
-      wy_item.className = "subject-item";
-      wy_item.innerHTML =
-        '<span class="subject-name">' + wy_sub.name + '</span>' +
+      const sfz_item = document.createElement("div");
+      sfz_item.className = "subject-item";
+      sfz_item.innerHTML =
+        '<span class="subject-name">' + sfz_sub.name + '</span>' +
         '<span class="subject-bar"><i style="width:0"></i></span>' +
-        '<span class="subject-value">' + wy_avg + '</span>';
-      wy_box.appendChild(wy_item);
+        '<span class="subject-value">' + sfz_avg + '</span>';
+      sfz_box.appendChild(sfz_item);
 
       // querySelector 在条目内找进度条，下一帧设置宽度触发动画
-      const wy_bar = wy_item.querySelector("i");
-      requestAnimationFrame(function () { wy_bar.style.width = wy_pct + "%"; });
+      const sfz_bar = sfz_item.querySelector("i");
+      requestAnimationFrame(function () { sfz_bar.style.width = sfz_pct + "%"; });
     });
   }
 
   /* ---------------- 模块3：榜单与预警 ---------------- */
-  function wy_renderRankings(wy_list) {
+  function sfz_renderRankings(sfz_list) {
     /* --- 优秀学生 Top3：filter(均分≥85) → sort(总分降序) → slice(0,3) --- */
-    const wy_top = wy_list
-      .filter(function (wy_student) { return wy_getAvg(wy_student) >= wy_excellentAvg; })
-      .sort(function (wy_a, wy_b) { return wy_getTotal(wy_b) - wy_getTotal(wy_a); })
+    const sfz_top = sfz_list
+      .filter(function (sfz_student) { return sfz_getAvg(sfz_student) >= sfz_excellentAvg; })
+      .sort(function (sfz_a, sfz_b) { return sfz_getTotal(sfz_b) - sfz_getTotal(sfz_a); })
       .slice(0, 3);
 
-    const wy_topBox = document.getElementById("topStudentsList");
-    wy_topBox.innerHTML = "";
-    if (!wy_top.length) {
-      wy_topBox.innerHTML = '<div class="empty">暂无优秀学生</div>';
+    const sfz_topBox = document.getElementById("topStudentsList");
+    sfz_topBox.innerHTML = "";
+    if (!sfz_top.length) {
+      sfz_topBox.innerHTML = '<div class="empty">暂无优秀学生</div>';
     }
-    wy_top.forEach(function (wy_student, wy_index) {
-      const wy_row = document.createElement("div");
-      wy_row.className = "rank-row";
-      wy_row.innerHTML =
-        '<span class="rk r' + (wy_index + 1) + '">' + (wy_index + 1) + '</span>' +
-        '<span class="nm">' + wy_student.name + '（' + wy_student.id + '）</span>' +
-        '<span class="vl">' + wy_getAvg(wy_student) + '</span>';
-      wy_topBox.appendChild(wy_row);
+    sfz_top.forEach(function (sfz_student, sfz_index) {
+      const sfz_row = document.createElement("div");
+      sfz_row.className = "rank-row";
+      sfz_row.innerHTML =
+        '<span class="rk r' + (sfz_index + 1) + '">' + (sfz_index + 1) + '</span>' +
+        '<span class="nm">' + sfz_student.name + '（' + sfz_student.id + '）</span>' +
+        '<span class="vl">' + sfz_getAvg(sfz_student) + '</span>';
+      sfz_topBox.appendChild(sfz_row);
     });
 
     /* --- 各科状元：遍历科目，reduce 找该科最高分者 --- */
-    const wy_champBox = document.getElementById("subjectChampionsList");
-    wy_champBox.innerHTML = "";
-    if (!wy_list.length) {
-      wy_champBox.innerHTML = '<div class="empty">暂无数据</div>';
+    const sfz_champBox = document.getElementById("subjectChampionsList");
+    sfz_champBox.innerHTML = "";
+    if (!sfz_list.length) {
+      sfz_champBox.innerHTML = '<div class="empty">暂无数据</div>';
     }
-    wy_subjects.forEach(function (wy_sub) {
-      if (!wy_list.length) return;
-      const wy_champ = wy_list.reduce(function (wy_max, wy_student) {
-        return wy_student[wy_sub.key] > wy_max[wy_sub.key] ? wy_student : wy_max;
-      }, wy_list[0]);
+    sfz_subjects.forEach(function (sfz_sub) {
+      if (!sfz_list.length) return;
+      const sfz_champ = sfz_list.reduce(function (sfz_max, sfz_student) {
+        return sfz_student[sfz_sub.key] > sfz_max[sfz_sub.key] ? sfz_student : sfz_max;
+      }, sfz_list[0]);
 
-      const wy_row = document.createElement("div");
-      wy_row.className = "champ-row";
-      wy_row.innerHTML =
-        '<span class="sbj">' + wy_sub.name + '</span>' +
-        '<span class="nm">' + wy_champ.name + '</span>' +
-        '<span class="vl">' + wy_champ[wy_sub.key] + '</span>';
-      wy_champBox.appendChild(wy_row);
+      const sfz_row = document.createElement("div");
+      sfz_row.className = "champ-row";
+      sfz_row.innerHTML =
+        '<span class="sbj">' + sfz_sub.name + '</span>' +
+        '<span class="nm">' + sfz_champ.name + '</span>' +
+        '<span class="vl">' + sfz_champ[sfz_sub.key] + '</span>';
+      sfz_champBox.appendChild(sfz_row);
     });
 
     /* --- 不及格预警：filter(有不及格) → sort(不及格数降序) --- */
-    const wy_fails = wy_list
-      .filter(function (wy_student) { return wy_getFails(wy_student).length > 0; })
-      .sort(function (wy_a, wy_b) {
-        return wy_getFails(wy_b).length - wy_getFails(wy_a).length;
+    const sfz_fails = sfz_list
+      .filter(function (sfz_student) { return sfz_getFails(sfz_student).length > 0; })
+      .sort(function (sfz_a, sfz_b) {
+        return sfz_getFails(sfz_b).length - sfz_getFails(sfz_a).length;
       });
 
-    const wy_failBox = document.getElementById("failWarningList");
-    wy_failBox.innerHTML = "";
-    if (!wy_fails.length) {
-      wy_failBox.innerHTML = '<div class="empty">全员通过，无预警</div>';
+    const sfz_failBox = document.getElementById("failWarningList");
+    sfz_failBox.innerHTML = "";
+    if (!sfz_fails.length) {
+      sfz_failBox.innerHTML = '<div class="empty">全员通过，无预警</div>';
     }
-    wy_fails.forEach(function (wy_student) {
-      const wy_names = wy_getFails(wy_student).map(function (wy_sub) {
-        return wy_sub.name;
+    sfz_fails.forEach(function (sfz_student) {
+      const sfz_names = sfz_getFails(sfz_student).map(function (sfz_sub) {
+        return sfz_sub.name;
       }).join("、");
-      const wy_row = document.createElement("div");
-      wy_row.className = "rank-row";
-      wy_row.innerHTML =
-        '<span class="rk">' + wy_getFails(wy_student).length + '</span>' +
-        '<span class="nm">' + wy_student.name + '（' + wy_names + '）</span>' +
-        '<span class="vl">' + wy_getTotal(wy_student) + '分</span>';
-      wy_failBox.appendChild(wy_row);
+      const sfz_row = document.createElement("div");
+      sfz_row.className = "rank-row";
+      sfz_row.innerHTML =
+        '<span class="rk">' + sfz_getFails(sfz_student).length + '</span>' +
+        '<span class="nm">' + sfz_student.name + '（' + sfz_names + '）</span>' +
+        '<span class="vl">' + sfz_getTotal(sfz_student) + '分</span>';
+      sfz_failBox.appendChild(sfz_row);
     });
 
     /* --- 班级状态提示：some / every --- */
-    const wy_tip = document.getElementById("statusTip");
-    const wy_hasFail = wy_list.some(function (wy_student) {
-      return wy_getFails(wy_student).length > 0;
+    const sfz_tip = document.getElementById("statusTip");
+    const sfz_hasFail = sfz_list.some(function (sfz_student) {
+      return sfz_getFails(sfz_student).length > 0;
     });
-    const wy_allExcellent = wy_list.every(function (wy_student) {
-      return wy_getAvg(wy_student) >= wy_excellentAvg;
+    const sfz_allExcellent = sfz_list.every(function (sfz_student) {
+      return sfz_getAvg(sfz_student) >= sfz_excellentAvg;
     });
 
-    if (!wy_list.length) {
-      wy_tip.textContent = "当前没有可统计的学生数据。";
-      wy_tip.className = "status-tip";
-    } else if (wy_allExcellent) {
-      wy_tip.textContent = "🎉 全班平均分均达到优秀线，整体表现优异！";
-      wy_tip.className = "status-tip";
-    } else if (wy_hasFail) {
-      wy_tip.textContent = "⚠ 班级中存在不及格科目，请关注预警名单中的学生。";
-      wy_tip.className = "status-tip bad";
+    if (!sfz_list.length) {
+      sfz_tip.textContent = "当前没有可统计的学生数据。";
+      sfz_tip.className = "status-tip";
+    } else if (sfz_allExcellent) {
+      sfz_tip.textContent = "🎉 全班平均分均达到优秀线，整体表现优异！";
+      sfz_tip.className = "status-tip";
+    } else if (sfz_hasFail) {
+      sfz_tip.textContent = "⚠ 班级中存在不及格科目，请关注预警名单中的学生。";
+      sfz_tip.className = "status-tip bad";
     } else {
-      wy_tip.textContent = "✓ 班级全员及格，继续保持！";
-      wy_tip.className = "status-tip";
+      sfz_tip.textContent = "✓ 班级全员及格，继续保持！";
+      sfz_tip.className = "status-tip";
     }
   }
 
   /* ---------------- 模块4：学生卡片（含展开详情） ---------------- */
-  function wy_renderStudentCards(wy_list) {
-    const wy_box = document.getElementById("studentList");
-    wy_box.innerHTML = "";
+  function sfz_renderStudentCards(sfz_list) {
+    const sfz_box = document.getElementById("studentList");
+    sfz_box.innerHTML = "";
 
-    wy_list.forEach(function (wy_student, wy_index) {
-      const wy_rank = wy_index + 1;
+    sfz_list.forEach(function (sfz_student, sfz_index) {
+      const sfz_rank = sfz_index + 1;
 
-      const wy_card = document.createElement("div");
-      wy_card.className = "student-card";
-      wy_card.setAttribute("data-id", wy_student.id);
+      const sfz_card = document.createElement("div");
+      sfz_card.className = "student-card";
+      sfz_card.setAttribute("data-id", sfz_student.id);
 
       // 头部
-      const wy_head = document.createElement("div");
-      wy_head.className = "hd";
-      wy_head.innerHTML =
-        '<div class="avatar ' + (wy_student.gender === "女" ? "girl" : "boy") + '">' +
-        wy_firstName(wy_student) + '</div>' +
-        '<div><div class="name">' + wy_student.name + '</div>' +
-        '<div class="meta">' + wy_student.id + ' · ' + wy_student.gender + '</div></div>' +
-        '<span class="rank-badge' + (wy_rank <= 3 ? " gold" : "") + '">第' + wy_rank + '名</span>';
-      wy_card.appendChild(wy_head);
+      const sfz_head = document.createElement("div");
+      sfz_head.className = "hd";
+      sfz_head.innerHTML =
+        '<div class="avatar ' + (sfz_student.gender === "女" ? "girl" : "boy") + '">' +
+        sfz_firstName(sfz_student) + '</div>' +
+        '<div><div class="name">' + sfz_student.name + '</div>' +
+        '<div class="meta">' + sfz_student.id + ' · ' + sfz_student.gender + '</div></div>' +
+        '<span class="rank-badge' + (sfz_rank <= 3 ? " gold" : "") + '">第' + sfz_rank + '名</span>';
+      sfz_card.appendChild(sfz_head);
 
       // 五科分数
-      const wy_grid = document.createElement("div");
-      wy_grid.className = "score-grid";
-      wy_subjects.forEach(function (wy_sub) {
-        const wy_cell = document.createElement("div");
-        wy_cell.className = "score-item";
-        wy_cell.innerHTML =
-          '<div class="sbj">' + wy_sub.abbr + '</div>' +
-          '<div class="val ' + wy_scoreClass(wy_student[wy_sub.key]) + '">' +
-          wy_student[wy_sub.key] + '</div>';
-        wy_grid.appendChild(wy_cell);
+      const sfz_grid = document.createElement("div");
+      sfz_grid.className = "score-grid";
+      sfz_subjects.forEach(function (sfz_sub) {
+        const sfz_cell = document.createElement("div");
+        sfz_cell.className = "score-item";
+        sfz_cell.innerHTML =
+          '<div class="sbj">' + sfz_sub.abbr + '</div>' +
+          '<div class="val ' + sfz_scoreClass(sfz_student[sfz_sub.key]) + '">' +
+          sfz_student[sfz_sub.key] + '</div>';
+        sfz_grid.appendChild(sfz_cell);
       });
-      wy_card.appendChild(wy_grid);
+      sfz_card.appendChild(sfz_grid);
 
       // 底部：总分 / 均分
-      const wy_foot = document.createElement("div");
-      wy_foot.className = "ft";
-      wy_foot.innerHTML =
-        '<span class="total">总分 ' + wy_getTotal(wy_student) + '</span>' +
-        '<span class="avg">均分 ' + wy_getAvg(wy_student) + '</span>';
-      wy_card.appendChild(wy_foot);
+      const sfz_foot = document.createElement("div");
+      sfz_foot.className = "ft";
+      sfz_foot.innerHTML =
+        '<span class="total">总分 ' + sfz_getTotal(sfz_student) + '</span>' +
+        '<span class="avg">均分 ' + sfz_getAvg(sfz_student) + '</span>';
+      sfz_card.appendChild(sfz_foot);
 
       // 详情区（卡片最后一个子元素，供 lastElementChild 定位）
-      const wy_detail = document.createElement("div");
-      wy_detail.className = "detail";
-      const wy_fails = wy_getFails(wy_student);
-      let wy_html = "<p><b>学号：</b>" + wy_student.id + "</p>";
-      wy_html += "<p><b>性别：</b>" + wy_student.gender + "</p>";
-      if (wy_fails.length) {
-        wy_html += "<p><b>不及格科目：</b>" +
-          wy_fails.map(function (wy_sub) { return wy_sub.name; }).join("、") + "</p>";
+      const sfz_detail = document.createElement("div");
+      sfz_detail.className = "detail";
+      const sfz_fails = sfz_getFails(sfz_student);
+      let sfz_html = "<p><b>学号：</b>" + sfz_student.id + "</p>";
+      sfz_html += "<p><b>性别：</b>" + sfz_student.gender + "</p>";
+      if (sfz_fails.length) {
+        sfz_html += "<p><b>不及格科目：</b>" +
+          sfz_fails.map(function (sfz_sub) { return sfz_sub.name; }).join("、") + "</p>";
       } else {
-        wy_html += "<p><b>状态：</b>全科及格 ✓</p>";
+        sfz_html += "<p><b>状态：</b>全科及格 ✓</p>";
       }
-      wy_detail.innerHTML = wy_html;
-      wy_card.appendChild(wy_detail);
+      sfz_detail.innerHTML = sfz_html;
+      sfz_card.appendChild(sfz_detail);
 
-      wy_box.appendChild(wy_card);
+      sfz_box.appendChild(sfz_card);
     });
   }
 
   /* ---------------- 搜索：filter + 姓名/学号匹配 ---------------- */
-  function wy_search(wy_keyword) {
-    const wy_kw = wy_keyword.trim().toLowerCase();
-    if (!wy_kw) return wy_students.slice();
-    return wy_students.filter(function (wy_student) {
-      return wy_student.name.toLowerCase().indexOf(wy_kw) > -1 ||
-             wy_student.id.indexOf(wy_kw) > -1;
+  function sfz_search(sfz_keyword) {
+    const sfz_kw = sfz_keyword.trim().toLowerCase();
+    if (!sfz_kw) return sfz_students.slice();
+    return sfz_students.filter(function (sfz_student) {
+      return sfz_student.name.toLowerCase().indexOf(sfz_kw) > -1 ||
+             sfz_student.id.indexOf(sfz_kw) > -1;
     });
   }
 
   /* ---------------- 排序：总分降序 / 学号升序 ---------------- */
-  let wy_currentSort = "total";
+  let sfz_currentSort = "total";
 
-  function wy_sortList(wy_list, wy_by) {
-    const wy_arr = wy_list.slice();
-    if (wy_by === "id") {
-      wy_arr.sort(function (wy_a, wy_b) { return wy_a.id > wy_b.id ? 1 : -1; });
+  function sfz_sortList(sfz_list, sfz_by) {
+    const sfz_arr = sfz_list.slice();
+    if (sfz_by === "id") {
+      sfz_arr.sort(function (sfz_a, sfz_b) { return sfz_a.id > sfz_b.id ? 1 : -1; });
     } else {
-      wy_arr.sort(function (wy_a, wy_b) { return wy_getTotal(wy_b) - wy_getTotal(wy_a); });
+      sfz_arr.sort(function (sfz_a, sfz_b) { return sfz_getTotal(sfz_b) - sfz_getTotal(sfz_a); });
     }
-    return wy_arr;
+    return sfz_arr;
   }
 
   /* ---------------- 筛选：全部 / 优秀 / 含不及格 ---------------- */
-  let wy_currentFilter = "all";
+  let sfz_currentFilter = "all";
 
-  function wy_filterList(wy_list, wy_mode) {
-    if (wy_mode === "excellent") {
-      return wy_list.filter(function (wy_student) {
-        return wy_getAvg(wy_student) >= wy_excellentAvg;
+  function sfz_filterList(sfz_list, sfz_mode) {
+    if (sfz_mode === "excellent") {
+      return sfz_list.filter(function (sfz_student) {
+        return sfz_getAvg(sfz_student) >= sfz_excellentAvg;
       });
     }
-    if (wy_mode === "fail") {
-      return wy_list.filter(function (wy_student) {
-        return wy_getFails(wy_student).length > 0;
+    if (sfz_mode === "fail") {
+      return sfz_list.filter(function (sfz_student) {
+        return sfz_getFails(sfz_student).length > 0;
       });
     }
-    return wy_list.slice();
+    return sfz_list.slice();
   }
 
   /* ---------------- 主刷新：搜索 → 排序 → 筛选 → 全模块渲染 ---------------- */
-  function wy_refresh() {
-    const wy_kw = document.getElementById("searchInput").value;
-    const wy_data = wy_filterList(wy_sortList(wy_search(wy_kw), wy_currentSort), wy_currentFilter);
-    wy_renderStats(wy_data);
-    wy_renderSubjectAverages(wy_data);
-    wy_renderRankings(wy_data);
-    wy_renderStudentCards(wy_data);
+  function sfz_refresh() {
+    const sfz_kw = document.getElementById("searchInput").value;
+    const sfz_data = sfz_filterList(sfz_sortList(sfz_search(sfz_kw), sfz_currentSort), sfz_currentFilter);
+    sfz_renderStats(sfz_data);
+    sfz_renderSubjectAverages(sfz_data);
+    sfz_renderRankings(sfz_data);
+    sfz_renderStudentCards(sfz_data);
   }
 
   /* ---------------- 事件绑定 ---------------- */
   // ① 搜索：input + 防抖 200ms
-  let wy_timer = null;
+  let sfz_timer = null;
   document.getElementById("searchInput").addEventListener("input", function () {
-    clearTimeout(wy_timer);
-    wy_timer = setTimeout(wy_refresh, 200);
+    clearTimeout(sfz_timer);
+    sfz_timer = setTimeout(sfz_refresh, 200);
   });
 
   // ② 排序按钮：事件委托 + closest + querySelectorAll（静态集合）移除高亮
-  document.getElementById("sortBtns").addEventListener("click", function (wy_event) {
-    const wy_btn = wy_event.target.closest("button");
-    if (!wy_btn) return;
-    wy_currentSort = wy_btn.getAttribute("data-sort");
-    this.querySelectorAll("button").forEach(function (wy_item) {
-      wy_item.classList.remove("active");
+  document.getElementById("sortBtns").addEventListener("click", function (sfz_event) {
+    const sfz_btn = sfz_event.target.closest("button");
+    if (!sfz_btn) return;
+    sfz_currentSort = sfz_btn.getAttribute("data-sort");
+    this.querySelectorAll("button").forEach(function (sfz_item) {
+      sfz_item.classList.remove("active");
     });
-    wy_btn.classList.add("active");
-    wy_refresh();
+    sfz_btn.classList.add("active");
+    sfz_refresh();
   });
 
   // ③ 筛选按钮：事件委托 + getElementsByClassName（动态集合，while 遍历）
-  document.getElementById("filterBtns").addEventListener("click", function (wy_event) {
-    const wy_btn = wy_event.target.closest("button");
-    if (!wy_btn) return;
-    wy_currentFilter = wy_btn.getAttribute("data-filter");
+  document.getElementById("filterBtns").addEventListener("click", function (sfz_event) {
+    const sfz_btn = sfz_event.target.closest("button");
+    if (!sfz_btn) return;
+    sfz_currentFilter = sfz_btn.getAttribute("data-filter");
 
     // 动态集合：长度会随移除实时变化，不能直接用 forEach，改用 while
-    const wy_actives = this.getElementsByClassName("active");
-    while (wy_actives.length) {
-      wy_actives[0].classList.remove("active");
+    const sfz_actives = this.getElementsByClassName("active");
+    while (sfz_actives.length) {
+      sfz_actives[0].classList.remove("active");
     }
-    wy_btn.classList.add("active");
-    wy_refresh();
+    sfz_btn.classList.add("active");
+    sfz_refresh();
   });
 
   // ④ 卡片展开：事件委托 + closest 定位卡片 + lastElementChild 取详情区 + toggle
-  document.getElementById("studentList").addEventListener("click", function (wy_event) {
-    const wy_card = wy_event.target.closest(".student-card");
-    if (!wy_card) return;
-    const wy_detail = wy_card.lastElementChild; // 详情区是卡片最后一个子节点
-    wy_card.classList.toggle("open");
-    wy_detail.setAttribute("aria-expanded", wy_card.classList.contains("open"));
+  document.getElementById("studentList").addEventListener("click", function (sfz_event) {
+    const sfz_card = sfz_event.target.closest(".student-card");
+    if (!sfz_card) return;
+    const sfz_detail = sfz_card.lastElementChild; // 详情区是卡片最后一个子节点
+    sfz_card.classList.toggle("open");
+    sfz_detail.setAttribute("aria-expanded", sfz_card.classList.contains("open"));
   });
 
   /* ---------------- 初始化 ---------------- */
-  wy_refresh();
+  sfz_refresh();
 })();
 </script>
 </body>
