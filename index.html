@@ -1,317 +1,534 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SFZ · Icon Atelier — 艺术品牌图标工坊</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="孙芳卓的《高级网页设计》课堂实践目录">
+    <title>高级网页设计 · 课堂实践</title>
+    <style>
+        :root {
+            --ink: #17242a;
+            --muted: #647277;
+            --paper: #f8f5ee;
+            --paper-deep: #eee8db;
+            --teal: #116466;
+            --teal-dark: #0a4041;
+            --coral: #ef8354;
+            --gold: #e8b04f;
+            --line: rgba(23, 36, 42, .14);
+            --shadow: 0 22px 60px rgba(30, 47, 47, .14);
+        }
 
-  :root {
-    --sfz_bg:        #0b0e14;
-    --sfz_bg_soft:   #12161f;
-    --sfz_gold:      #d4af37;
-    --sfz_gold_dim:  #8a7433;
-    --sfz_text:      #e8e4d9;
-    --sfz_text_muted:#8a8578;
-    --sfz_line:      rgba(212, 175, 55, .15);
-    --sfz_serif:     'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
-    --sfz_sans:      'Inter', 'Noto Serif SC', system-ui, sans-serif;
-  }
+        * {
+            box-sizing: border-box;
+        }
 
-  body {
-    font-family: var(--sfz_sans);
-    background: var(--sfz_bg);
-    color: var(--sfz_text);
-    min-height: 100vh;
-    overflow-x: hidden;
-    position: relative;
-  }
+        html {
+            scroll-behavior: smooth;
+        }
 
-  /* 背景装饰 */
-  body::before {
-    content: '';
-    position: fixed; inset: 0;
-    background:
-      radial-gradient(1200px 600px at 15% 10%, rgba(212,175,55,.08), transparent 60%),
-      radial-gradient(900px 500px at 85% 90%, rgba(80,120,180,.06), transparent 60%);
-    pointer-events: none; z-index: 0;
-  }
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: var(--paper);
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            line-height: 1.6;
+        }
 
-  .sfz_container {
-    position: relative; z-index: 1;
-    max-width: 1180px; margin: 0 auto;
-    padding: 64px 32px 96px;
-  }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
 
-  /* 顶部 LOGO 区 */
-  .sfz_header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 80px;
-    border-bottom: 1px solid var(--sfz_line);
-    padding-bottom: 40px;
-  }
-  .sfz_logo {
-    font-family: var(--sfz_serif);
-    font-weight: 600;
-    font-size: 28px;
-    letter-spacing: .08em;
-    color: var(--sfz_gold);
-  }
-  .sfz_logo_sub {
-    display: block;
-    font-family: var(--sfz_sans);
-    font-size: 10px;
-    letter-spacing: .4em;
-    color: var(--sfz_text_muted);
-    margin-top: 8px;
-    text-transform: uppercase;
-  }
-  .sfz_nav { font-size: 13px; letter-spacing: .2em; color: var(--sfz_text_muted); text-transform: uppercase; }
+        .page-shell {
+            min-height: 100vh;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 89% 7%, rgba(232, 176, 79, .24), transparent 20rem),
+                radial-gradient(circle at 8% 78%, rgba(17, 100, 102, .13), transparent 24rem),
+                var(--paper);
+        }
 
-  /* Hero 区 */
-  .sfz_hero { margin-bottom: 96px; text-align: center; }
-  .sfz_hero_kicker {
-    font-size: 11px; letter-spacing: .5em; color: var(--sfz_gold);
-    text-transform: uppercase; margin-bottom: 24px;
-  }
-  .sfz_hero_title {
-    font-family: var(--sfz_serif);
-    font-size: clamp(40px, 7vw, 88px);
-    font-weight: 500;
-    line-height: 1.05;
-    letter-spacing: .02em;
-    background: linear-gradient(135deg, #e8d48b 0%, #d4af37 45%, #8a7433 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    margin-bottom: 28px;
-  }
-  .sfz_hero_title em { font-style: italic; font-weight: 400; }
-  .sfz_hero_desc {
-    max-width: 620px; margin: 0 auto;
-    font-size: 15px; line-height: 1.9;
-    color: var(--sfz_text_muted);
-    font-weight: 300;
-  }
+        .topbar {
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 26px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            animation: rise .7s ease both;
+        }
 
-  /* 卡片网格 */
-  .sfz_cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
-  }
-  .sfz_card {
-    position: relative;
-    background: linear-gradient(160deg, var(--sfz_bg_soft) 0%, #0e1118 100%);
-    border: 1px solid var(--sfz_line);
-    border-radius: 6px;
-    padding: 48px 40px;
-    cursor: pointer;
-    transition: all .4s cubic-bezier(.2,.7,.2,1);
-    overflow: hidden;
-  }
-  .sfz_card::before {
-    content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba(212,175,55,0) 0%, rgba(212,175,55,.04) 100%);
-    opacity: 0; transition: opacity .4s ease;
-  }
-  .sfz_card:hover {
-    border-color: var(--sfz_gold);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px -20px rgba(212,175,55,.15);
-  }
-  .sfz_card:hover::before { opacity: 1; }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            letter-spacing: .08em;
+        }
 
-  .sfz_card_num {
-    font-family: var(--sfz_serif);
-    font-size: 14px; letter-spacing: .3em;
-    color: var(--sfz_gold_dim); margin-bottom: 28px;
-  }
-  .sfz_card_icon {
-    font-size: 48px; color: var(--sfz_gold);
-    margin-bottom: 24px; line-height: 1;
-    transition: transform .4s ease;
-  }
-  .sfz_card:hover .sfz_card_icon { transform: scale(1.08); }
-  .sfz_card_title {
-    font-family: var(--sfz_serif);
-    font-size: 28px; font-weight: 500;
-    color: var(--sfz_text); margin-bottom: 12px;
-  }
-  .sfz_card_title_en {
-    font-family: var(--sfz_sans);
-    font-size: 11px; letter-spacing: .35em;
-    color: var(--sfz_text_muted); text-transform: uppercase;
-    margin-bottom: 24px;
-  }
-  .sfz_card_desc {
-    font-size: 13.5px; line-height: 1.8;
-    color: var(--sfz_text_muted); margin-bottom: 32px; font-weight: 300;
-  }
-  .sfz_card_cta {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: var(--sfz_sans);
-    font-size: 12px; letter-spacing: .25em;
-    color: var(--sfz_gold); text-transform: uppercase; text-decoration: none;
-    border-bottom: 1px solid var(--sfz_gold_dim);
-    padding-bottom: 4px;
-    transition: gap .3s ease;
-  }
-  .sfz_card:hover .sfz_card_cta { gap: 18px; }
+        .brand-mark {
+            width: 38px;
+            height: 38px;
+            display: grid;
+            place-items: center;
+            color: var(--paper);
+            background: var(--teal);
+            border-radius: 50% 50% 50% 8px;
+            transform: rotate(-10deg);
+            font-size: 18px;
+        }
 
-  /* 页脚 */
-  .sfz_footer {
-    margin-top: 96px; padding-top: 40px;
-    border-top: 1px solid var(--sfz_line);
-    display: flex; justify-content: space-between;
-    font-size: 11px; letter-spacing: .25em;
-    color: var(--sfz_text_muted); text-transform: uppercase;
-  }
+        .topbar nav {
+            display: flex;
+            gap: 22px;
+            color: var(--muted);
+            font-size: 14px;
+        }
 
-  @media (max-width: 720px) {
-    .sfz_cards { grid-template-columns: 1fr; }
-    .sfz_header { flex-direction: column; gap: 20px; }
-  }
-</style>
+        .topbar nav a:hover {
+            color: var(--teal);
+        }
+
+        .hero {
+            width: min(1160px, calc(100% - 40px));
+            min-height: 470px;
+            margin: 30px auto 0;
+            padding: clamp(38px, 7vw, 86px);
+            position: relative;
+            display: flex;
+            align-items: center;
+            border-radius: 28px;
+            color: #fff;
+            background: var(--teal);
+            box-shadow: var(--shadow);
+            isolation: isolate;
+            overflow: hidden;
+        }
+
+        .hero::before,
+        .hero::after {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 50%;
+        }
+
+        .hero::before {
+            width: 480px;
+            height: 480px;
+            right: -150px;
+            top: -220px;
+        }
+
+        .hero::after {
+            width: 310px;
+            height: 310px;
+            right: 60px;
+            bottom: -220px;
+            background: rgba(239, 131, 84, .88);
+            border: 0;
+        }
+
+        .hero-content {
+            max-width: 690px;
+            animation: rise .8s .1s ease both;
+        }
+
+        .eyebrow {
+            margin: 0 0 18px;
+            color: #f5d18b;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: .2em;
+        }
+
+        h1, h2, p {
+            margin-top: 0;
+        }
+
+        h1 {
+            max-width: 680px;
+            margin-bottom: 22px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(42px, 7vw, 76px);
+            font-weight: 700;
+            letter-spacing: .01em;
+            line-height: 1.08;
+        }
+
+        .hero-copy {
+            max-width: 560px;
+            margin-bottom: 32px;
+            color: rgba(255, 255, 255, .78);
+            font-size: 17px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 19px;
+            border: 1px solid rgba(255, 255, 255, .25);
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .button.primary {
+            color: var(--ink);
+            background: #fff;
+        }
+
+        .button.secondary:hover {
+            background: rgba(255, 255, 255, .12);
+        }
+
+        main {
+            width: min(1160px, calc(100% - 40px));
+            margin: 90px auto 0;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 26px;
+        }
+
+        .section-heading h2 {
+            margin-bottom: 5px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(30px, 4vw, 46px);
+            line-height: 1.15;
+        }
+
+        .section-heading p {
+            margin-bottom: 4px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .lesson-card {
+            min-height: 255px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, .52);
+            transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+            animation: rise .65s ease both;
+        }
+
+        .lesson-card:nth-child(2) { animation-delay: .1s; }
+        .lesson-card:nth-child(3) { animation-delay: .2s; }
+        .lesson-card:nth-child(4) { animation-delay: .3s; }
+
+        .lesson-card:hover {
+            border-color: rgba(17, 100, 102, .36);
+            box-shadow: 0 16px 32px rgba(23, 36, 42, .1);
+            transform: translateY(-6px);
+        }
+
+        .lesson-number {
+            color: var(--coral);
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .lesson-card h3 {
+            margin: 32px 0 9px;
+            font-size: 22px;
+        }
+
+        .lesson-card p {
+            margin-bottom: 25px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .card-link {
+            width: fit-content;
+            color: var(--teal);
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .card-link::after {
+            content: "  →";
+            transition: margin-left .2s ease;
+        }
+
+        .card-link:hover::after {
+            margin-left: 5px;
+        }
+
+        .prompt-block {
+            margin: 100px 0 70px;
+            padding: 34px clamp(24px, 5vw, 52px);
+            border-left: 5px solid var(--gold);
+            background: var(--paper-deep);
+        }
+
+        .prompt-label {
+            margin-bottom: 12px;
+            color: var(--teal);
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: .16em;
+        }
+
+        .prompt-block blockquote {
+            margin: 0;
+            color: #394a4b;
+            font-family: Georgia, "Microsoft YaHei", serif;
+            font-size: clamp(18px, 2.5vw, 25px);
+            line-height: 1.65;
+        }
+
+        footer {
+            width: min(1160px, calc(100% - 40px));
+            margin: 0 auto;
+            padding: 22px 0 35px;
+            display: flex;
+            justify-content: space-between;
+            gap: 18px;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            font-size: 13px;
+        }
+
+        @keyframes rise {
+            from { opacity: 0; transform: translateY(18px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 780px) {
+            .topbar nav { display: none; }
+            .hero { min-height: 540px; margin-top: 15px; }
+            .lesson-grid { grid-template-columns: 1fr; }
+            .lesson-card { min-height: 210px; }
+            .section-heading { display: block; }
+            .section-heading p { margin-top: 10px; }
+            footer { display: block; }
+            footer span { display: block; margin-top: 8px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="sfz_container">
+    <div class="page-shell">
+        <header class="topbar">
+            <a class="brand" href="./index.html" aria-label="返回课堂首页">
+                <span class="brand-mark">SFZ</span>
+                <span>孙芳卓 · 课堂实践</span>
+            </a>
+            <nav aria-label="页面导航">
+                <a href="#lessons">课堂目录</a>
+                <a href="#prompt">本次提示词</a>
+            </nav>
+        </header>
 
-  <!-- Header -->
-  <header class="sfz_header">
-    <div class="sfz_logo">SFZ<span class="sfz_logo_sub">Icon · Atelier</span></div>
-    <nav class="sfz_nav">Vol. 01 · 2026</nav>
-  </header>
+        <section class="hero" aria-labelledby="page-title">
+            <div class="hero-content">
+                <p class="eyebrow">ADVANCED WEB DESIGN / CLASS PRACTICE</p>
+                <h1 id="page-title">高级网页设计</h1>
+                <p class="hero-copy">把每一次课堂练习整理成可访问、可复用、持续生长的网页作品集。从布局基础出发，逐步探索图标、交互与更多前端表达。</p>
+                <div class="hero-actions">
+                    <a class="button primary" href="#lessons">浏览课堂目录 <span aria-hidden="true">↓</span></a>
+                    <a class="button secondary" href="./1.html">进入 Flex 复习 <span aria-hidden="true">↗</span></a>
+                </div>
+            </div>
+        </section>
 
-  <!-- Hero -->
-  <section class="sfz_hero">
-    <p class="sfz_hero_kicker">A Curated Collection · 工坊精选</p>
-    <h1 class="sfz_hero_title">Icon as <em>Art</em><br>图标即艺术</h1>
-    <p class="sfz_hero_desc">
-      在这个视觉语言过载的时代，我们重新审视每一个图标的轮廓、笔触与留白。
-      两页精选 —— 以 Font Awesome 的经典字体符号，与 Lucide 的极简 SVG，
-      共同构筑一方属于设计师的静谧之所。
-    </p>
-  </section>
+        <main>
+            <section id="lessons" aria-labelledby="lessons-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow" style="color: var(--coral);">LESSON INDEX</p>
+                        <h2 id="lessons-title">课堂目录</h2>
+                    </div>
+                    <p>已完成模块 15 · 后续内容持续增加</p>
+                </div>
 
-  <!-- 入口卡片 -->
-  <section class="sfz_cards">
-    <a class="sfz_card" href="iconfont-1.html">
-      <div class="sfz_card_num">N° 01</div>
-      <div class="sfz_card_icon" aria-hidden="true">❖</div>
-      <h2 class="sfz_card_title">Font Awesome</h2>
-      <p class="sfz_card_title_en">Typography of Glyphs</p>
-      <p class="sfz_card_desc">
-        最被广泛采用的图标字体库。以 @font-face 方式嵌入 .woff2，
-        用 CSS 伪元素渲染 Unicode 字形 —— 经典、优雅、可被任何字体样式操控。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                <div class="lesson-grid">
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">01</span>
+                            <h3>Flex 复习</h3>
+                            <p>导航布局、三等分布局、响应式卡片与侧边栏等基础案例。</p>
+                        </div>
+                        <a class="card-link" href="./1.html">查看练习</a>
+                    </article>
 
-    <a class="sfz_card" href="iconfont-2.html">
-      <div class="sfz_card_num">N° 02</div>
-      <div class="sfz_card_icon" aria-hidden="true">✦</div>
-      <h2 class="sfz_card_title">Lucide</h2>
-      <p class="sfz_card_title_en">Geometry of Lines</p>
-      <p class="sfz_card_desc">
-        扁平化、线性、统一 24×24 栅格。通过 UMD JS 将 <code>&lt;i data-lucide&gt;</code>
-        实时替换为原生 SVG —— 精确、可缩放、每一条路径都可被单独着色与动画。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
-  </section>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">02</span>
+                            <h3>字体图标</h3>
+                            <p>浏览本地 iconfont 资源，了解 Unicode 与 Font class 的使用方式。</p>
+                        </div>
+                        <a class="card-link" href="./font/demo_index.html">查看字体图标</a>
+                    </article>
 
-  <!-- 课堂实践 · 成绩面板 -->
-  <section class="sfz_hero" style="margin-top:96px;margin-bottom:40px">
-    <p class="sfz_hero_kicker">Class Practice · 课堂实践</p>
-    <h1 class="sfz_hero_title" style="font-size:clamp(30px,4vw,52px)">成绩<em>面板</em></h1>
-    <p class="sfz_hero_desc">
-      DOM 查找 × 数组方法 × 函数 · 综合实战，18 名学生的五科成绩，
-      从统计卡到卡片列表逐层还原。
-    </p>
-  </section>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">03</span>
+                            <h3>SVG 图标</h3>
+                            <p>使用本地 SVG symbol 与原生 JavaScript 完成图标标签切换。</p>
+                        </div>
+                        <a class="card-link" href="./font/svg.html">查看 SVG 练习</a>
+                    </article>
 
-  <section class="sfz_cards">
-    <a class="sfz_card" href="score-panel/starter-level1.html">
-      <div class="sfz_card_num">L1</div>
-      <div class="sfz_card_icon" aria-hidden="true">◈</div>
-      <h2 class="sfz_card_title">等级一 · 基础</h2>
-      <p class="sfz_card_title_en">Level One · Essentials</p>
-      <p class="sfz_card_desc">
-        概览统计、卡片渲染、不及格预警、搜索、排序 —— 5 项核心功能，
-        以 getElementById / querySelector 与 reduce / filter / sort 完成。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">04</span>
+                            <h3>JS对象</h3>
+                            <p>对象语法、属性与方法的使用，理解 JavaScript 数据组织方式。</p>
+                        </div>
+                        <a class="card-link" href="./JS对象.html">查看对象练习</a>
+                    </article>
 
-    <a class="sfz_card" href="score-panel/starter-level2.html">
-      <div class="sfz_card_num">L2</div>
-      <div class="sfz_card_icon" aria-hidden="true">◉</div>
-      <h2 class="sfz_card_title">等级二 · 进阶</h2>
-      <p class="sfz_card_title_en">Level Two · Advanced</p>
-      <p class="sfz_card_desc">
-        在等级一基础上新增各科平均进度条、Top3、各科状元、筛选切换、
-        卡片展开与班级状态提示，共 11 项功能。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">05</span>
+                            <h3>JS对象的应用</h3>
+                            <p>把对象结合场景练习，实现更贴近实际的页面交互与数据处理。</p>
+                        </div>
+                        <a class="card-link" href="./JS对象的应用.html">查看应用练习</a>
+                    </article>
 
-    <a class="sfz_card" href="score-panel/target.html">
-      <div class="sfz_card_num">REF</div>
-      <div class="sfz_card_icon" aria-hidden="true">◆</div>
-      <h2 class="sfz_card_title">目标效果</h2>
-      <p class="sfz_card_title_en">Reference Answer</p>
-      <p class="sfz_card_desc">
-        参考答案页面，用于与自己的实现逐像素对照：同数据、同结构、同交互。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">06</span>
+                            <h3>JS函数</h3>
+                            <p>函数定义、参数、返回值和调用方式，掌握代码复用与逻辑封装。</p>
+                        </div>
+                        <a class="card-link" href="./JS函数.html">查看函数练习</a>
+                    </article>
 
-    <a class="sfz_card" href="tabs-news.html">
-      <div class="sfz_card_num">T01</div>
-      <div class="sfz_card_icon" aria-hidden="true">▣</div>
-      <h2 class="sfz_card_title">新闻 Tab</h2>
-      <p class="sfz_card_title_en">Reusable Tab Switcher</p>
-      <p class="sfz_card_desc">
-        可复用的 Tab 选项卡控制器：监听事件、先清除全部选中态、再激活当前元素。
-        JS 独立于 js/sfz_tabs.js，支持多实例。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">07</span>
+                            <h3>图标工坊 · Font Awesome</h3>
+                            <p>以字体图标方式展示 40 个 Font Awesome 图标，艺术品牌风格的深墨与金色配色。</p>
+                        </div>
+                        <a class="card-link" href="./iconfont-1.html">查看图标页</a>
+                    </article>
 
-    <a class="sfz_card" href="sfz_stock.html">
-      <div class="sfz_card_num">S01</div>
-      <div class="sfz_card_icon" aria-hidden="true">📈</div>
-      <h2 class="sfz_card_title">个股涨跌榜</h2>
-      <p class="sfz_card_title_en">A股 Top Gainers / Losers</p>
-      <p class="sfz_card_desc">
-        沪涨 · 沪跌 · 深涨 · 深跌 四榜切换，涨跌用红蓝着色，
-        数据来自 js/sfz_stock_data.js，渲染由 js/sfz_stock.js 完成。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">08</span>
+                            <h3>图标工坊 · Lucide</h3>
+                            <p>以原生 SVG 方式展示 40 个 Lucide 图标，逐图可单独上色与动画。</p>
+                        </div>
+                        <a class="card-link" href="./iconfont-2.html">查看图标页</a>
+                    </article>
 
-    <a class="sfz_card" href="swiper-task.html">
-      <div class="sfz_card_num">W01</div>
-      <div class="sfz_card_icon" aria-hidden="true">🎞️</div>
-      <h2 class="sfz_card_title">Swiper 轮播</h2>
-      <p class="sfz_card_title_en">Swiper Carousel Gallery</p>
-      <p class="sfz_card_desc">
-        大国重器光影展：六件展品 × 四组轮播，分别实现拖动、圆点箭头、自动播放，
-        以及七种切换效果（slide / fade / cube / coverflow / flip / cards / creative）与键盘翻页。
-      </p>
-      <span class="sfz_card_cta">Enter →</span>
-    </a>
-  </section>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">09</span>
+                            <h3>移动端下导航 · 字体图标</h3>
+                            <p>固定底部四栏导航，含数字徽章与红点提示，字体图标版实现。</p>
+                        </div>
+                        <a class="card-link" href="./iconfont-3.html">查看移动端页</a>
+                    </article>
 
-  <!-- Footer -->
-  <footer class="sfz_footer">
-    <span>© 2026 SFZ Atelier</span>
-    <span>Crafted with ♦ in HTML · CSS · SVG</span>
-  </footer>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">10</span>
+                            <h3>移动端下导航 · SVG</h3>
+                            <p>同样的底部四栏导航，改用内联 SVG 绘制图标，结构更轻也可逐条路径动画。</p>
+                        </div>
+                        <a class="card-link" href="./iconfont-4.html">查看移动端页</a>
+                    </article>
 
-</div>
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">11</span>
+                            <h3>新闻 Tab 切换</h3>
+                            <p>国内 / 省内 / 国际 / 最热四栏选项卡，默认国内新闻，切换组件可复用。</p>
+                        </div>
+                        <a class="card-link" href="./tabs-news.html">查看选项卡</a>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">12</span>
+                            <h3>个股涨跌榜</h3>
+                            <p>沪深涨跌四个榜单切换，涨红跌绿的表格渲染，数据与视图分离。</p>
+                        </div>
+                        <a class="card-link" href="./sfz_stock.html">查看榜单页</a>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">13</span>
+                            <h3>Swiper 轮播光影展</h3>
+                            <p>大国重器六件展品，四组轮播演示拖动、圆点箭头、自动播放与七种切换效果。</p>
+                        </div>
+                        <a class="card-link" href="./swiper-task.html">查看轮播页</a>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">14</span>
+                            <h3>学生成绩分析</h3>
+                            <p>统计概览、不及格预警、搜索排序、科目均分、优秀 Top3 与各科状元。</p>
+                        </div>
+                        <a class="card-link" href="./score-panel/starter-level2.html">查看成绩面板</a>
+                    </article>
+
+                    <article class="lesson-card">
+                        <div>
+                            <span class="lesson-number">15</span>
+                            <h3>待添加模块</h3>
+                            <p>新的课堂实践将在这里继续归档，保持目录清晰，也保留探索空间。</p>
+                        </div>
+                        <a class="card-link" href="#prompt">持续更新</a>
+                    </article>
+                </div>
+            </section>
+
+            <section class="prompt-block" id="prompt" aria-labelledby="prompt-title">
+                <p class="prompt-label" id="prompt-title">本次页面提示词</p>
+                <blockquote>创建一个新页面，包括本目录下的所有网页的超链接，使用原生代码，不使用 CDN，新页面名称为 index.html，主题为孙芳卓的《高级网页设计》课堂实践，美化页面，课堂目录中包含 flex 复习、字体图标，其余模块后续在增加。页面中包括本提示词。</blockquote>
+            </section>
+        </main>
+
+        <footer>
+            <span>孙芳卓 · 《高级网页设计》</span>
+            <span>Native HTML · CSS · JavaScript</span>
+        </footer>
+    </div>
 </body>
 </html>
