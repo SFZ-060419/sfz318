@@ -5,7 +5,7 @@
  * 作者：孙芳卓
  * 创建时间：2026-11-08
  * 使用模型：DeepSeek-V4.1-Flash
- * 功能：Swiper 轮播课堂任务（四组轮播初始化 + 七种切换效果实时切换）
+ * 功能：Swiper 轮播课堂任务（四组轮播初始化 + 七种切换效果 + 任务一 mySw4 成品）
  * ============================================================ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -239,7 +239,32 @@
     </div>
   </div>
 
-  <div class="wy-back"><a href="index.html">← 返回课堂实践中心</a>　<a href="swiper-lesson.html">查看教师讲解版 →</a></div>
+  <!-- 任务一 · 提示词工程师：按四条需求迭代出的成品 mySw4 -->
+  <div class="wy-sec">
+    <div class="wy-sec-head">
+      <span class="wy-no">＋</span>
+      <h2>任务一 · 提示词工程师<small>mySw4：四需求成品</small></h2>
+    </div>
+    <p class="wy-txt">这一台是按任务一的四条需求、经两轮提示词迭代出来的成品：<b>①</b> 无缝循环 <b>②</b> 3.2 秒自动翻页且手动操作后不停止 <b>③</b> 圆点分页器可点击 <b>④</b> 初始效果为 <code>cube</code>。两轮提示词原文、AI 回答与我逐项验证的结论，都记在 <a href="swiper-prompt-log.html">提示词记录页</a>。</p>
+    <div class="wy-demo">
+      <span class="wy-demo-tag">🎛️ 任务一成品 · #mySw4（初始 cube · 自动 3.2 秒 · 圆点可点）</span>
+      <div class="wy-swiper">
+        <div class="swiper" id="mySw4">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="swiper-imgs/tiangong_1.jpg" alt="天宫空间站"><div class="wy-cap"><h3>天宫空间站</h3><p>立方体第一面</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fuxing_1.jpg" alt="复兴号动车组"><div class="wy-cap"><h3>复兴号动车组</h3><p>自动翻页中，拖动后不会停</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/c919_1.jpg" alt="C919大飞机"><div class="wy-cap"><h3>C919 大飞机</h3><p>点下面的圆点可以跳转</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fendouzhe_1.jpg" alt="奋斗者号"><div class="wy-cap"><h3>奋斗者号</h3><p>3.2 秒一面</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/fast_1.jpg" alt="中国天眼"><div class="wy-cap"><h3>中国天眼 FAST</h3><p>循环播放，没有尽头</p></div></div>
+            <div class="swiper-slide"><img src="swiper-imgs/aida_modu_1.jpg" alt="爱达·魔都号"><div class="wy-cap"><h3>爱达·魔都号</h3><p>第六面 · 回到第一面无缝衔接</p></div></div>
+          </div>
+          <div class="swiper-pagination" id="myPag4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wy-back"><a href="index.html">← 返回课堂实践中心</a>　<a href="swiper-prompt-log.html">查看提示词记录 →</a></div>
 
   <footer>Swiper 课堂操作任务 · 大国重器光影展（学生版） · 高级网页设计 · 2026-2027-1</footer>
 </div>
@@ -313,6 +338,15 @@
       sfz_sw4.destroy(true, true);
       sfz_sw4 = sfz_newSw4(sfz_btn.dataset.fx);
     });
+  });
+
+  // 【任务一】按四条需求初始化 #mySw4：无缝循环 + 3.2 秒自动翻页（手动后不停）+ 可点圆点 + 初始 cube
+  var sfz_mySw4 = new Swiper('#mySw4', {
+    loop: true,
+    effect: 'cube',
+    cubeEffect: { shadow: true, slideShadows: true },
+    autoplay: { delay: 3200, disableOnInteraction: false },
+    pagination: { el: '#myPag4', clickable: true }
   });
 </script>
 </body>
